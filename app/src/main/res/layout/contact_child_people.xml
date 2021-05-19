@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
+
+    <xyz.nfcv.telephone_directory.widget.RoundAngleImageView
+        android:id="@+id/contact_child_people_avatar"
+        android:layout_width="@dimen/avatar_size"
+        android:layout_height="@dimen/avatar_size"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/default_margin"
+        app:roundHeight="@dimen/avatar_round"
+        app:roundWidth="@dimen/avatar_round" />
+
+    <TextView
+        android:id="@+id/contact_child_people_name"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/contact_child_people_avatar"
+        android:gravity="center_vertical"
+        android:text="@string/preview_text_feifei"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:ignore="RelativeOverlap" />
+
+    <ImageView
+        android:id="@+id/contact_child_people_info"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/default_margin"
+        android:contentDescription="@string/arrow_goto"
+        android:src="@drawable/ic_arrow_right" />
+</RelativeLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity">
+
+    <ExpandableListView
+        android:id="@+id/contactor_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:childDivider="@color/transparent"
+        android:childIndicator="@null"
+        android:groupIndicator="@null" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contact_sidebar"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginHorizontal="@dimen/default_margin"
+        android:layout_marginVertical="@dimen/default_margin"
+        android:background="@drawable/border_capsule_20dp"
+        android:overScrollMode="never"
+        android:paddingVertical="10dp" />
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_add_contactor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/default_margin" />
+</RelativeLayout>
