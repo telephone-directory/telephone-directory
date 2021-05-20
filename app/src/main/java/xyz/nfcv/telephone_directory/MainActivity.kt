@@ -2,9 +2,7 @@ package xyz.nfcv.telephone_directory
 
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
 import xyz.nfcv.telephone_directory.adapter.SidebarAdapter

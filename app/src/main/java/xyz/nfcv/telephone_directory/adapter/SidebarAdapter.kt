@@ -1,6 +1,9 @@
 package xyz.nfcv.telephone_directory.adapter
 
+import android.content.Context
 import android.graphics.Color
+import android.os.Build
+import android.os.VibrationEffect
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -11,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import xyz.nfcv.telephone_directory.databinding.SidebarItemBinding
 import xyz.nfcv.telephone_directory.model.Header
+import android.os.Vibrator
+import javax.xml.validation.Validator
 
 class SidebarAdapter(
     private val recycler: RecyclerView,
@@ -21,7 +26,18 @@ class SidebarAdapter(
 
     private var selected = 0
         set(value) {
-            field = value
+            val index = when {
+                value < 0 -> 0
+                value > data.lastIndex -> data.lastIndex
+                else -> value
+            }
+            field = index
+            val vibrator = recycler.context.getSystemService(Vibrator::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                vibrator.vibrate(VibrationEffect.createOneShot(5, 255))
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
+            }
             notifyItemRangeChanged(0, itemCount)
         }
 
@@ -31,6 +47,8 @@ class SidebarAdapter(
         recycler.layoutManager = LinearLayoutManager(recycler.context).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
+
+
 
     }
 
