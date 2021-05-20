@@ -2,7 +2,7 @@ package xyz.nfcv.telephone_directory.model
 
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
 
-class PeopleGroupData(var groups: List<PeopleGroup>) {
+class PeopleGroupData(private var groups: List<PeopleGroup>) {
     operator fun get(index: Int): Person {
         var size = 0
         for (group in groups) {
@@ -64,7 +64,7 @@ class PeopleGroupData(var groups: List<PeopleGroup>) {
     fun group(index: Int): PeopleGroup? {
         var size = 0
         for (group in groups) {
-            if (index in size until group.people.size) {
+            if (index in size until size + group.people.size) {
                 return group
             }
             size += group.people.size
@@ -72,5 +72,6 @@ class PeopleGroupData(var groups: List<PeopleGroup>) {
         return null
     }
 
-    val size = groups.sumOf { it.people.size }
+    val size: Int
+        get() = groups.sumOf { it.people.size }
 }

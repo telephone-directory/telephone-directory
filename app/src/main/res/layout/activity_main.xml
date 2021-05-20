@@ -5,13 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ExpandableListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contactor_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:childDivider="@color/transparent"
-        android:childIndicator="@null"
-        android:groupIndicator="@null" />
+        android:layout_height="match_parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contact_sidebar"

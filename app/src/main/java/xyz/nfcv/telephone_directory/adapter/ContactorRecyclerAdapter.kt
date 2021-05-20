@@ -22,6 +22,7 @@ class ContactorRecyclerAdapter(private val recycler: RecyclerView) :
         }
 
         recycler.addItemDecoration(ContactorHeaderDecoration(this))
+        recycler.adapter = this
     }
 
     val data = PeopleGroupData(listOf())
@@ -52,5 +53,7 @@ class ContactorRecyclerAdapter(private val recycler: RecyclerView) :
         holder.info.visibility = View.GONE
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int {
+        return data.size
+    }
 }

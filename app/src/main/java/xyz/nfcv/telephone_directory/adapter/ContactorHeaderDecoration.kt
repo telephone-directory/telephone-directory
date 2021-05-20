@@ -40,14 +40,14 @@ class ContactorHeaderDecoration(private val adapter: ContactorRecyclerAdapter) :
                 }
                 drawHeader(
                     left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), c,
-                    adapter.data.group(i)?.header?.value ?: "?"
+                    adapter.data.group(position)?.header?.value ?: "?"
                 )
             } else if (adapter.data.first(i)) {
                 val top = child.top - 64
                 val bottom = top + 64
                 drawHeader(
                     left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), c,
-                    adapter.data.group(i)?.header?.value ?: "?"
+                    adapter.data.group(position)?.header?.value ?: "?"
                 )
             }
 
@@ -62,19 +62,15 @@ class ContactorHeaderDecoration(private val adapter: ContactorRecyclerAdapter) :
         c: Canvas,
         header: String
     ) {
+        paint.textSize = 36F
         paint.color = Color.GRAY
-        c.drawRect(left, top, right, bottom, paint)
-
-        paint.textSize = 12F
-        paint.color = Color.BLUE
 
         val rect = Rect()
         paint.getTextBounds(header, 0, header.length, rect)
 
         val textHeight = rect.height()
-
-        val textX = left + 40
-        val textY: Float = top + (64 + textHeight) / 2
+        val textX = left + 48
+        val textY: Float = top + (36 + textHeight) / 2
         c.drawText(header, textX, textY, paint)
     }
 
