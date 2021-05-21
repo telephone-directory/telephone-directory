@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="72dp">
 
-    <xyz.nfcv.telephone_directory.widget.RoundAngleImageView
+    <xyz.nfcv.widget.RoundAngleImageView
         android:id="@+id/contact_child_people_avatar"
         android:layout_width="@dimen/avatar_size"
         android:layout_height="@dimen/avatar_size"

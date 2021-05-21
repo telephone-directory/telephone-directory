@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
 import xyz.nfcv.telephone_directory.databinding.ContactChildPeopleBinding
 import xyz.nfcv.telephone_directory.model.PeopleGroupData
-import xyz.nfcv.telephone_directory.widget.RoundAngleImageView
+import xyz.nfcv.widget.RoundAngleImageView
 
 class ContactorRecyclerAdapter(private val recycler: RecyclerView) :
     RecyclerView.Adapter<ContactorRecyclerAdapter.ViewHolder>() {

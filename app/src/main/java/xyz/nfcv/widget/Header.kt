@@ -1,4 +1,4 @@
-package xyz.nfcv.telephone_directory.model
+package xyz.nfcv.widget
 
 enum class Header(val value: String, private val index: Int) {
     LIKE("收藏", 0),

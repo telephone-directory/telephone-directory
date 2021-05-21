@@ -3,15 +3,11 @@ package xyz.nfcv.telephone_directory.adapter
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.util.Log
+import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import xyz.nfcv.telephone_directory.databinding.SidebarItemBinding
-import xyz.nfcv.telephone_directory.model.Header
-import android.view.*
-import androidx.core.view.children
-import androidx.core.view.forEachIndexed
-import androidx.core.view.iterator
-import xyz.nfcv.telephone_directory.adapter.SidebarAdapter.Companion.inTouchPoint
+import xyz.nfcv.widget.Header
 
 @SuppressLint("ClickableViewAccessibility")
 class SidebarAdapter(
@@ -24,15 +20,18 @@ class SidebarAdapter(
 
     private var selected = 0
         set(value) {
-            val index = when {
-                value < 0 -> 0
-                value > data.lastIndex -> data.lastIndex
-                else -> value
+            when {
+                value < 0 -> {
+                    return
+                }
+                value > data.lastIndex -> {
+                    return
+                }
+                else -> {
+                    field = value
+                    recycler.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+                }
             }
-
-            field = index
-
-            recycler.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
 
             notifyItemRangeChanged(0, itemCount)
         }
@@ -51,6 +50,7 @@ class SidebarAdapter(
 
                 MotionEvent.ACTION_MOVE -> {
                     val p = event.rawX to event.rawY
+                    Log.d(javaClass.name, "${point.second} - ${p.second}")
                     if (point.second - p.second > 20) {
                         selected--
                         point = event.rawX to event.rawY

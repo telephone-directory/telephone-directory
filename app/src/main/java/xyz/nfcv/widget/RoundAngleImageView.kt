@@ -1,4 +1,4 @@
-package xyz.nfcv.telephone_directory.widget
+package xyz.nfcv.widget
 
 
 import android.content.Context

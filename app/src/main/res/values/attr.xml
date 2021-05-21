@@ -4,4 +4,10 @@
         <attr name="roundWidth" format="dimension" />
         <attr name="roundHeight" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="Sidebar">
+        <attr name="selectedColor" format="color" />
+        <attr name="normalColor" format="color" />
+        <attr name="shape" format="reference" />
+    </declare-styleable>
 </resources>

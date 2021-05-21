@@ -12,7 +12,7 @@ import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
 import xyz.nfcv.telephone_directory.adapter.SidebarAdapter
 import xyz.nfcv.telephone_directory.databinding.ActivityMainBinding
-import xyz.nfcv.telephone_directory.model.Header
+import xyz.nfcv.widget.Header
 import xyz.nfcv.telephone_directory.model.Person
 import java.util.*
 

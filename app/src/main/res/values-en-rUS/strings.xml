@@ -5,4 +5,7 @@
     <string name="preview_text_feifei">FeiFei</string>
     <string name="arrow_goto">Goto</string>
     <string name="create_contactor">New Contactor</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="edit_contactor">Edit Contactor</string>
 </resources>

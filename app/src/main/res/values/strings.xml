@@ -4,4 +4,7 @@
     <string name="preview_text_feifei">飞飞</string>
     <string name="arrow_goto">前往</string>
     <string name="create_contactor">新建联系人</string>
+    <string name="cancel">取消</string>
+    <string name="submit">提交</string>
+    <string name="edit_contactor">编辑联系人</string>
 </resources>
