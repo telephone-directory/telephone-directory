@@ -1,28 +1,26 @@
 package xyz.nfcv.telephone_directory.adapter
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.graphics.Color
-import android.os.Build
-import android.os.VibrationEffect
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.forEachIndexed
-import androidx.core.view.iterator
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import xyz.nfcv.telephone_directory.databinding.SidebarItemBinding
 import xyz.nfcv.telephone_directory.model.Header
-import android.os.Vibrator
-import javax.xml.validation.Validator
+import android.view.*
+import androidx.core.view.children
+import androidx.core.view.forEachIndexed
+import androidx.core.view.iterator
+import xyz.nfcv.telephone_directory.adapter.SidebarAdapter.Companion.inTouchPoint
 
+@SuppressLint("ClickableViewAccessibility")
 class SidebarAdapter(
     private val recycler: RecyclerView,
     private val listener: (Int, Header) -> Unit
 ) : RecyclerView.Adapter<SidebarAdapter.ViewHolder>() {
 
     private val data = Header.values()
+    private var point = Pair<Float, Float>(0f, 0f)
 
     private var selected = 0
         set(value) {
@@ -31,13 +29,11 @@ class SidebarAdapter(
                 value > data.lastIndex -> data.lastIndex
                 else -> value
             }
+
             field = index
-            val vibrator = recycler.context.getSystemService(Vibrator::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                vibrator.vibrate(VibrationEffect.createOneShot(5, 255))
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
-            }
+
+            recycler.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+
             notifyItemRangeChanged(0, itemCount)
         }
 
@@ -47,8 +43,29 @@ class SidebarAdapter(
         recycler.layoutManager = LinearLayoutManager(recycler.context).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
+        recycler.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    point = event.rawX to event.rawY
+                }
 
+                MotionEvent.ACTION_MOVE -> {
+                    val p = event.rawX to event.rawY
+                    if (point.second - p.second > 20) {
+                        selected--
+                        point = event.rawX to event.rawY
+                    } else if (p.second - point.second > 20) {
+                        selected++
+                        point = event.rawX to event.rawY
+                    }
+                }
 
+                MotionEvent.ACTION_UP -> {
+                    point = 0f to 0f
+                }
+            }
+            return@setOnTouchListener false
+        }
 
     }
 

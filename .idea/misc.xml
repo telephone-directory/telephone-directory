@@ -3,13 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.8405172413793104" />
         <entry key="app/src/main/res/drawable-v24/border_capsule_28dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/border_capsule_20dp.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_add.xml" value="0.23026315789473684" />
         <entry key="app/src/main/res/drawable/ic_arrow_right.xml" value="0.23026315789473684" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2734375" />
         <entry key="app/src/main/res/drawable/ic_new.xml" value="0.23026315789473684" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3175416133162612" />
+        <entry key="app/src/main/res/drawable/ic_scan.xml" value="0.23026315789473684" />
+        <entry key="app/src/main/res/layout/activity_edit_contactor.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/contact_child_people.xml" value="0.25333333333333335" />
         <entry key="app/src/main/res/layout/contact_group_header.xml" value="0.21385281385281385" />
         <entry key="app/src/main/res/layout/contact_header.xml" value="0.25729166666666664" />

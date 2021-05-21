@@ -10,11 +10,7 @@ import android.text.TextPaint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseExpandableListAdapter
-import android.widget.ExpandableListView
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.SortedList
+import android.widget.*
 import xyz.nfcv.telephone_directory.databinding.ContactChildPeopleBinding
 import xyz.nfcv.telephone_directory.databinding.ContactGroupHeaderBinding
 import xyz.nfcv.telephone_directory.model.Header
@@ -24,7 +20,10 @@ import java.util.*
 import kotlin.math.abs
 
 
-class ContactorListAdapter(private var context: Context, private val list: ExpandableListView) :
+class ContactorListAdapter(
+    private var context: Context,
+    private val list: ExpandableListView
+) :
     BaseExpandableListAdapter() {
     private val data = ArrayList<PeopleGroup>()
 
@@ -32,6 +31,7 @@ class ContactorListAdapter(private var context: Context, private val list: Expan
         this.data.clear()
         this.data.addAll(data)
         notifyDataSetChanged()
+
 
         for (i in 0 until groupCount) {
             list.expandGroup(i)

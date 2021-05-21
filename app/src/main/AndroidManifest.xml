@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="xyz.nfcv.telephone_directory">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +13,12 @@
         android:theme="@style/Theme.Telephonedirectory"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".EditContactorActivity"
+            android:theme="@style/Theme.Telephonedirectory.NoActionBar"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.Telephonedirectory.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
