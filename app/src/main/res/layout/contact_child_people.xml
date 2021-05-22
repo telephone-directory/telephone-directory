@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="72dp">
 
-    <xyz.nfcv.widget.RoundAngleImageView
+    <xyz.nfcv.widget.RoundImageView
         android:id="@+id/contact_child_people_avatar"
         android:layout_width="@dimen/avatar_size"
         android:layout_height="@dimen/avatar_size"
         android:layout_centerVertical="true"
-        android:layout_margin="@dimen/default_margin"
-        app:roundHeight="@dimen/avatar_round"
-        app:roundWidth="@dimen/avatar_round" />
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        app:radius="@dimen/avatar_round" />
 
     <TextView
         android:id="@+id/contact_child_people_name"

@@ -170,7 +170,7 @@ class Sidebar : View {
                         selected = 0
                     }
                 }
-                performHapticFeedback(HapticFeedbackConstants.KEYBOARD_PRESS)
+//                performHapticFeedback(HapticFeedbackConstants.KEYBOARD_PRESS)
             }
 
             MotionEvent.ACTION_UP -> {
@@ -187,7 +187,7 @@ class Sidebar : View {
                         selected = 0
                     }
                 }
-                performHapticFeedback(HapticFeedbackConstants.KEYBOARD_RELEASE)
+//                performHapticFeedback(HapticFeedbackConstants.KEYBOARD_RELEASE)
             }
 
             MotionEvent.ACTION_MOVE -> {

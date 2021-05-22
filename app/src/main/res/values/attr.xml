@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="RoundAngleImageView">
-        <attr name="roundWidth" format="dimension" />
-        <attr name="roundHeight" format="dimension" />
+    <declare-styleable name="RoundImageView">
+        <attr name="radius" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="Sidebar">
         <attr name="selectedColor" format="color" />
         <attr name="normalColor" format="color" />
-        <attr name="shape" format="reference" />
     </declare-styleable>
 </resources>

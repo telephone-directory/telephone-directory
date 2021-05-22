@@ -7,12 +7,15 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import xyz.nfcv.telephone_directory.R
 
-class RoundAngleImageView : AppCompatImageView {
+class RoundImageView : AppCompatImageView {
 
     private lateinit var paint: Paint
-    private var roundWidth = 5
-    private var roundHeight = 5
     private lateinit var paint2: Paint
+    var radius = 5
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
         context,
@@ -30,25 +33,15 @@ class RoundAngleImageView : AppCompatImageView {
         init(context, null)
     }
 
-    fun setRound(round: Int) {
-        roundHeight = round
-        roundWidth = round
-        invalidate()
-    }
-
     private fun init(context: Context, attrs: AttributeSet?) {
 
         if (attrs != null) {
-            val a = context.obtainStyledAttributes(attrs, R.styleable.RoundAngleImageView)
-            roundWidth =
-                a.getDimensionPixelSize(R.styleable.RoundAngleImageView_roundWidth, roundWidth)
-            roundHeight =
-                a.getDimensionPixelSize(R.styleable.RoundAngleImageView_roundHeight, roundHeight)
+            val a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView)
+            radius = a.getDimensionPixelSize(R.styleable.RoundImageView_radius, radius)
             a.recycle()
         } else {
             val density = context.resources.displayMetrics.density
-            roundWidth = (roundWidth * density).toInt()
-            roundHeight = (roundHeight * density).toInt()
+            radius = (radius * density).toInt()
         }
 
         paint = Paint()
@@ -64,21 +57,21 @@ class RoundAngleImageView : AppCompatImageView {
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas2 = Canvas(bitmap)
         super.draw(canvas2)
-        drawLiftUp(canvas2)
-        drawRightUp(canvas2)
-        drawLiftDown(canvas2)
+        drawLeftTop(canvas2)
+        drawRightTop(canvas2)
+        drawLeftDown(canvas2)
         drawRightDown(canvas2)
         canvas.drawBitmap(bitmap, 0f, 0f, paint2)
         bitmap.recycle()
     }
 
-    private fun drawLiftUp(canvas: Canvas) {
+    private fun drawLeftTop(canvas: Canvas) {
         val path = Path()
-        path.moveTo(0f, roundHeight.toFloat())
+        path.moveTo(0f, radius.toFloat())
         path.lineTo(0f, 0f)
-        path.lineTo(roundWidth.toFloat(), 0f)
+        path.lineTo(radius.toFloat(), 0f)
         path.arcTo(
-            RectF(0f, 0f, (roundWidth * 2).toFloat(), (roundHeight * 2).toFloat()),
+            RectF(0f, 0f, (radius * 2).toFloat(), (radius * 2).toFloat()),
             -90f,
             -90f
         )
@@ -86,16 +79,16 @@ class RoundAngleImageView : AppCompatImageView {
         canvas.drawPath(path, paint)
     }
 
-    private fun drawLiftDown(canvas: Canvas) {
+    private fun drawLeftDown(canvas: Canvas) {
         val path = Path()
-        path.moveTo(0f, (height - roundHeight).toFloat())
+        path.moveTo(0f, (height - radius).toFloat())
         path.lineTo(0f, height.toFloat())
-        path.lineTo(roundWidth.toFloat(), height.toFloat())
+        path.lineTo(radius.toFloat(), height.toFloat())
         path.arcTo(
             RectF(
                 0f,
-                (height - roundHeight * 2).toFloat(),
-                (roundWidth * 2).toFloat(),
+                (height - radius * 2).toFloat(),
+                (radius * 2).toFloat(),
                 height.toFloat()
             ), 90f, 90f
         )
@@ -105,13 +98,13 @@ class RoundAngleImageView : AppCompatImageView {
 
     private fun drawRightDown(canvas: Canvas) {
         val path = Path()
-        path.moveTo((width - roundWidth).toFloat(), height.toFloat())
+        path.moveTo((width - radius).toFloat(), height.toFloat())
         path.lineTo(width.toFloat(), height.toFloat())
-        path.lineTo(width.toFloat(), (height - roundHeight).toFloat())
+        path.lineTo(width.toFloat(), (height - radius).toFloat())
         path.arcTo(
             RectF(
-                (width - roundWidth * 2).toFloat(),
-                (height - roundHeight * 2).toFloat(),
+                (width - radius * 2).toFloat(),
+                (height - radius * 2).toFloat(),
                 width.toFloat(),
                 height.toFloat()
             ), 0f, 90f
@@ -120,17 +113,17 @@ class RoundAngleImageView : AppCompatImageView {
         canvas.drawPath(path, paint)
     }
 
-    private fun drawRightUp(canvas: Canvas) {
+    private fun drawRightTop(canvas: Canvas) {
         val path = Path()
-        path.moveTo(width.toFloat(), roundHeight.toFloat())
+        path.moveTo(width.toFloat(), radius.toFloat())
         path.lineTo(width.toFloat(), 0f)
-        path.lineTo((width - roundWidth).toFloat(), 0f)
+        path.lineTo((width - radius).toFloat(), 0f)
         path.arcTo(
             RectF(
-                (width - roundWidth * 2).toFloat(),
+                (width - radius * 2).toFloat(),
                 0f,
                 width.toFloat(),
-                (roundHeight * 2).toFloat()
+                (radius * 2).toFloat()
             ), -90f, 90f
         )
         path.close()

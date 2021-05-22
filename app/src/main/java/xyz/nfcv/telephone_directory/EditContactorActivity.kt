@@ -22,6 +22,7 @@ class EditContactorActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
+
         
     }
 }

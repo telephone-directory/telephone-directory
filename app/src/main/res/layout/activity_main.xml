@@ -14,16 +14,15 @@
         android:childIndicator="@null"
         android:groupIndicator="@null" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <xyz.nfcv.widget.Sidebar
         android:id="@+id/contact_sidebar"
         android:layout_width="20dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="@dimen/default_margin"
         android:layout_marginVertical="@dimen/default_margin"
-        android:background="@drawable/border_capsule_20dp"
-        android:overScrollMode="never"
-        android:paddingVertical="10dp" />
+        app:normalColor="@color/gray_400"
+        app:selectedColor="@color/teal_200" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab_add_contactor"
