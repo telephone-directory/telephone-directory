@@ -182,12 +182,17 @@ class Sidebar : View {
         return true
     }
 
-    fun setSelected(header: Header, feedback: Boolean) {
+    fun setSelected(header: Header, feedback: Boolean = false) {
         val index = items.indexOf(header)
         setSelected(index, feedback = feedback, ignore = true, callback = false)
     }
 
-    private fun setSelected(selected: Int, feedback: Boolean = false, ignore: Boolean = true, callback: Boolean = true) {
+    private fun setSelected(
+        selected: Int,
+        feedback: Boolean = false,
+        ignore: Boolean = true,
+        callback: Boolean = true
+    ) {
         if (ignore && selected == _selected) {
             return
         }

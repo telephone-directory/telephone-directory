@@ -16,6 +16,7 @@ import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
 import xyz.nfcv.telephone_directory.databinding.ActivityMainBinding
 import xyz.nfcv.telephone_directory.model.Person
+import xyz.nfcv.widget.Header
 import java.util.*
 
 
@@ -34,6 +35,20 @@ class MainActivity : AppCompatActivity() {
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.updatePadding(top = insets.top)
             WindowInsetsCompat.CONSUMED
+        }
+
+        for (i in 0..100) {
+            Person.insert(
+                this,
+                Person(null, "${('A'..'Z').random()} ${('A'..'Z').random()}", "1276512")
+            )
+        }
+
+        for (i in 0..5) {
+            Person.insert(
+                this,
+                Person(null, "${('0'..'9').random()} ${('A'..'Z').random()}", "1276512")
+            )
         }
 
         binding.contactorSearch.setOnFocusChangeListener { _, hasFocus ->
@@ -87,16 +102,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.contactSidebar.addListener { _, header ->
-            if (contactorListAdapter.contains(header)) {
-                Log.d(javaClass.name, "$header")
-                contactorListAdapter.scroll(header)
-            } else {
-                contactorListAdapter.first(binding.contactorList.firstVisiblePosition, binding.contactorList.lastVisiblePosition)?.let {
-                    binding.contactSidebar.setSelected(it, feedback = false)
-                }
+//            if (contactorListAdapter.contains(header)) {
+//                Log.d(javaClass.name, "$header")
+//                contactorListAdapter.scroll(header)
+//            }
+            contactorListAdapter.near(header)?.let {
+                contactorListAdapter.scroll(it)
             }
         }
+
         binding.contactorList.setOnScrollListener(object : AbsListView.OnScrollListener {
+            var first: Header? = null
             override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
 
             }
@@ -107,10 +123,17 @@ class MainActivity : AppCompatActivity() {
                 visibleItemCount: Int,
                 totalItemCount: Int
             ) {
-                val header = contactorListAdapter.first(binding.contactorList.firstVisiblePosition, binding.contactorList.lastVisiblePosition)
+                val header = contactorListAdapter.first(
+                    binding.contactorList.firstVisiblePosition,
+                    binding.contactorList.lastVisiblePosition
+                )
                 if (header != null) {
                     binding.contactSidebar.setSelected(header, feedback = false)
                 }
+                if (header != first) {
+                    view?.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
+                }
+                first = header
             }
 
         })

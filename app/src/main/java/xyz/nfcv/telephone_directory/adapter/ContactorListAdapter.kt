@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.text.TextPaint
+import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
@@ -160,6 +161,24 @@ class ContactorListAdapter(
 
     fun contains(header: Header): Boolean {
         return data.count { it.header == header } > 0
+    }
+
+    fun near(header: Header): Header? {
+        if (contains(header)) return header
+        val before = data.lastOrNull { it.header.index < header.index }?.header
+        val after = data.firstOrNull { it.header.index > header.index }?.header
+        if (after != null && before != null) {
+            val diffBefore = abs(header.index - before.index)
+            val diffAfter = abs(header.index - after.index)
+            return if (diffBefore > diffAfter) after else before
+        } else if (after != null && before == null) {
+            return after
+        } else if (after == null && before != null) {
+            return before
+        } else {
+            Log.wtf(javaClass.name, "怎么可以发生这样的事情！！！")
+            return data.firstOrNull()?.header
+        }
     }
 
     fun scroll(header: Header) {
