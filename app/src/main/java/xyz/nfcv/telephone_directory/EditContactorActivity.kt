@@ -13,9 +13,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.ofBitmap
 import xyz.nfcv.telephone_directory.databinding.ActivityEditContactorBinding
 import xyz.nfcv.telephone_directory.model.Person
 import java.util.*
+import java.util.regex.Pattern
 
 class EditContactorActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditContactorBinding
@@ -58,7 +60,7 @@ class EditContactorActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+                s?.let { binding.contactorAvatar.setImageBitmap("$s".last.ofBitmap()) }
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -95,4 +97,19 @@ class EditContactorActivity : AppCompatActivity() {
             return@setOnTouchListener false
         }
     }
+
+    companion object {
+        val String.last: String
+            get() {
+                val chinese = Pattern.compile("[\u4e00-\u9fa5]").matcher(this).find()
+                return if (chinese) {
+                    "${this.trim().uppercase().lastOrNull() ?: "#"}"
+                } else {
+                    val words = this.split(" ").filter { it.isNotBlank() }
+                    val l = words.mapNotNull { it.firstOrNull()?.uppercase() }.take(2).joinToString("")
+                    if (l.isBlank()) "#" else l
+                }
+            }
+    }
+
 }
