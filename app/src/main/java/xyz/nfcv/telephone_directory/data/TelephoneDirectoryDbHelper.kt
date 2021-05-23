@@ -18,11 +18,12 @@ class TelephoneDirectoryDbHelper(context: Context) : SQLiteOpenHelper(context, D
             const val COLUMN_NAME_EMAIL = "email"
             const val COLUMN_NAME_WORK_ADDRESS = "work_address"
             const val COLUMN_NAME_HOME_ADDRESS = "home_address"
+            const val COLUMN_NAME_LIKE = "star"
         }
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL("create table ${TPerson.TABLE_NAME}(${BaseColumns._ID} varchar(36) not null primary key, ${TPerson.COLUMN_NAME_NAME} varchar(64) not null, ${TPerson.COLUMN_NAME_TELEPHONE} varchar(20) not null, ${TPerson.COLUMN_NAME_EMAIL} varchar(20), ${TPerson.COLUMN_NAME_WORK_ADDRESS} varchar(64), ${TPerson.COLUMN_NAME_HOME_ADDRESS} varchar(64))")
+        db.execSQL("create table ${TPerson.TABLE_NAME}(${BaseColumns._ID} varchar(36) not null primary key, ${TPerson.COLUMN_NAME_NAME} varchar(64) not null, ${TPerson.COLUMN_NAME_TELEPHONE} varchar(20) not null, ${TPerson.COLUMN_NAME_EMAIL} varchar(20), ${TPerson.COLUMN_NAME_WORK_ADDRESS} varchar(64), ${TPerson.COLUMN_NAME_HOME_ADDRESS} varchar(64), ${TPerson.COLUMN_NAME_LIKE} integer not null)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

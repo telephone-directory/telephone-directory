@@ -22,7 +22,8 @@ data class Person(
     var telephone: String,
     var email: String? = null,
     var workAddress: String? = null,
-    var homeAddress: String? = null
+    var homeAddress: String? = null,
+    var like: Int = 0
 ) : Comparable<Person> {
 
     companion object {
@@ -37,6 +38,7 @@ data class Person(
                         contentValues.put(TPerson.COLUMN_NAME_EMAIL, person.email)
                         contentValues.put(TPerson.COLUMN_NAME_WORK_ADDRESS, person.workAddress)
                         contentValues.put(TPerson.COLUMN_NAME_HOME_ADDRESS, person.homeAddress)
+                        contentValues.put(TPerson.COLUMN_NAME_LIKE, person.like)
                         db.insert(TPerson.TABLE_NAME, null, contentValues)
                     }
                 }
@@ -72,6 +74,7 @@ data class Person(
                     contentValues.put(TPerson.COLUMN_NAME_EMAIL, person.email)
                     contentValues.put(TPerson.COLUMN_NAME_WORK_ADDRESS, person.workAddress)
                     contentValues.put(TPerson.COLUMN_NAME_HOME_ADDRESS, person.homeAddress)
+                    contentValues.put(TPerson.COLUMN_NAME_LIKE, person.like)
                     return db.update(
                         TPerson.TABLE_NAME,
                         contentValues,
@@ -94,7 +97,8 @@ data class Person(
                             TPerson.COLUMN_NAME_TELEPHONE,
                             TPerson.COLUMN_NAME_EMAIL,
                             TPerson.COLUMN_NAME_WORK_ADDRESS,
-                            TPerson.COLUMN_NAME_HOME_ADDRESS
+                            TPerson.COLUMN_NAME_HOME_ADDRESS,
+                            TPerson.COLUMN_NAME_LIKE
                         ),
                         null,
                         null,
@@ -111,7 +115,8 @@ data class Person(
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TELEPHONE)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_EMAIL)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_WORK_ADDRESS)),
-                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS))
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE))
                                 )
                                 persons.add(person)
                             }
@@ -135,7 +140,8 @@ data class Person(
                             TPerson.COLUMN_NAME_TELEPHONE,
                             TPerson.COLUMN_NAME_EMAIL,
                             TPerson.COLUMN_NAME_WORK_ADDRESS,
-                            TPerson.COLUMN_NAME_HOME_ADDRESS
+                            TPerson.COLUMN_NAME_HOME_ADDRESS,
+                            TPerson.COLUMN_NAME_LIKE
                         ),
                         "${TPerson.COLUMN_NAME_NAME} like ?",
                         arrayOf("%${value}%"),
@@ -152,7 +158,8 @@ data class Person(
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TELEPHONE)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_EMAIL)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_WORK_ADDRESS)),
-                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS))
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE))
                                 )
                                 persons.add(person)
                             }
@@ -176,7 +183,8 @@ data class Person(
                             TPerson.COLUMN_NAME_TELEPHONE,
                             TPerson.COLUMN_NAME_EMAIL,
                             TPerson.COLUMN_NAME_WORK_ADDRESS,
-                            TPerson.COLUMN_NAME_HOME_ADDRESS
+                            TPerson.COLUMN_NAME_HOME_ADDRESS,
+                            TPerson.COLUMN_NAME_LIKE
                         ),
                         "${TPerson.COLUMN_NAME_WORK_ADDRESS} like ? or ${TPerson.COLUMN_NAME_HOME_ADDRESS} like ?",
                         arrayOf("%${value}%", "%${value}%"),
@@ -193,7 +201,8 @@ data class Person(
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TELEPHONE)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_EMAIL)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_WORK_ADDRESS)),
-                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS))
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE))
                                 )
                                 persons.add(person)
                             }
@@ -226,6 +235,9 @@ data class Person(
 
     val first: Header
         get() {
+            if (like != 0) {
+                return Header.LIKE
+            }
             val pinyin = PinyinHelper.toHanYuPinyinString(
                 name.trim().uppercase(),
                 HanyuPinyinOutputFormat().apply {

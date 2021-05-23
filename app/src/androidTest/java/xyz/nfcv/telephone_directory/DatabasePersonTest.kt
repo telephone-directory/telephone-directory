@@ -19,7 +19,7 @@ class DatabasePersonTest {
     @Test
     fun insert() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        Person.insert(appContext, Person(null, "xxx", "17xxxxxxxxxx", "xxx@zjut.edu.cn", "浙江省杭州市西湖区留下街道留和路288号浙江工业大学屏峰校区", "浙江省XX市XX县XX镇XX村"))
+        Person.insert(appContext, Person(null, "xxx", "17xxxxxxxxxx", "xxx@zjut.edu.cn", "浙江省杭州市西湖区留下街道留和路288号浙江工业大学屏峰校区", "浙江省XX市XX县XX镇XX村", 0))
     }
 
     @Test
@@ -37,6 +37,7 @@ class DatabasePersonTest {
         val person = Person.all(appContext)[0]
         person.email = "XXXXXX@qq.com"
         person.telephone = "123456778901"
+        person.like = 1
         val result = Person.update(appContext, person)
     }
 }

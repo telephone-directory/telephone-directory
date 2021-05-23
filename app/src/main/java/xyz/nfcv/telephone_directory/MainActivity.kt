@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.addContactor.setOnClickListener {
-            startActivity(Intent(this, EditContactorActivity::class.java))
+            startActivity(Intent(this, AddContactorActivity::class.java))
 
             binding.fabContactorMenu.collapse()
         }

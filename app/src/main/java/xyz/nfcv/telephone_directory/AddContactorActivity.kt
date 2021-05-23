@@ -14,19 +14,19 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.ofBitmap
-import xyz.nfcv.telephone_directory.databinding.ActivityEditContactorBinding
+import xyz.nfcv.telephone_directory.databinding.ActivityAddContactorBinding
 import xyz.nfcv.telephone_directory.model.Person
 import java.util.*
 import java.util.regex.Pattern
 
-class EditContactorActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityEditContactorBinding
+class AddContactorActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAddContactorBinding
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        binding = ActivityEditContactorBinding.inflate(layoutInflater)
+        binding = ActivityAddContactorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.getWindowInsetsController(binding.root)?.isAppearanceLightStatusBars = true
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
