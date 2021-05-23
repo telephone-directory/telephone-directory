@@ -4,9 +4,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.text.Layout
-import android.text.StaticLayout
+import android.graphics.Paint
 import android.text.TextPaint
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,24 +66,21 @@ class ContactorListAdapter(
             lateinit var info: ImageView
         }
 
-        fun getBitmapByChar(text: Char, size: Int = 1000): Bitmap {
+        fun getBitmapByChar(text: String, size: Int = 1000): Bitmap {
             val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
             canvas.drawBitmap(bitmap, 0f, 0f, null)
             canvas.drawColor(Color.rgb(0xdd, 0xdd, 0xdd))
 
             val paint = TextPaint(TextPaint.ANTI_ALIAS_FLAG).apply {
+                textAlign = Paint.Align.CENTER
                 textSize = size * 0.5f
                 color = Color.WHITE
             }
 
-            val layout = StaticLayout.Builder
-                .obtain("$text", 0, 1, paint, size)
-                .setAlignment(Layout.Alignment.ALIGN_CENTER)
-                .build()
+            val offset = abs(paint.descent() + paint.ascent()) + size * 3 / 10f
 
-            canvas.translate(0f, abs(paint.descent() + paint.ascent()) * 0.5f - size / 25f)
-            layout.draw(canvas)
+            canvas.drawText(text, size / 2f, offset, paint)
             return bitmap
         }
     }
@@ -154,10 +151,71 @@ class ContactorListAdapter(
 
         val person = getChild(groupPosition, childPosition)
         holder.name.text = person.name
-        holder.avatar.setImageBitmap(getBitmapByChar(person.name.last()))
+        holder.avatar.setImageBitmap(getBitmapByChar(person.last))
         holder.info.visibility = View.GONE
         return view
     }
 
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean = true
+
+    fun contains(header: Header): Boolean {
+        return data.count { it.header == header } > 0
+    }
+
+    fun scroll(header: Header) {
+        val group = data.indexOfFirst { it.header == header }
+        val position = if (group < 0) {
+            data.take(0).sumOf { 1 + it.people.size }
+        } else {
+            data.take(group).sumOf { 1 + it.people.size }
+        }
+
+        if (group >= 0) {
+            list.setSelectedGroup(group)
+//            val first = first(list.firstVisiblePosition, list.lastVisiblePosition)
+//            if (first != header) {
+//                list.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+//            }
+        }
+    }
+
+    fun first(start: Int, last: Int): Header? {
+        var position = 0
+        data.forEach { group ->
+            position += 1 + group.people.size
+            val range = 0 until position
+            if (start in range) {
+                return group.header
+            }
+        }
+
+        return null
+    }
+
+    private fun visible(start: Int, last: Int): ArrayList<Header> {
+        var position = 0
+        val range = start..last
+        val headers = ArrayList<Header>()
+        data.forEach { group ->
+            if (position in range) {
+                headers.add(group.header)
+            }
+            position += 1 + group.people.size
+        }
+        return headers
+    }
+
+    fun last(start: Int, last: Int): Header? {
+        var position = 0
+        val range = start..last
+        val headers = ArrayList<Header>()
+        data.forEach { group ->
+            position += 1 + group.people.size
+            if (position - 1 in range) {
+                headers.add(group.header)
+            }
+        }
+
+        return headers.lastOrNull()
+    }
 }

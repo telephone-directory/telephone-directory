@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".EditContactorActivity">
 
-
     <LinearLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -46,13 +46,199 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_below="@id/toolbar">
 
-        <xyz.nfcv.widget.RoundImageView
-            android:id="@+id/contactor_avatar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_gravity="center_horizontal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <xyz.nfcv.widget.RoundImageView
+                android:id="@+id/contactor_avatar"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/default_margin"
+                android:contentDescription="@string/avatar"
+                android:hapticFeedbackEnabled="true"
+                android:src="@color/gray_200"
+                app:radius="32dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin2"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_capsule_left_20dp"
+                    android:gravity="center_vertical"
+                    android:labelFor="@id/contactor_name"
+                    android:padding="@dimen/default_padding"
+                    android:text="@string/name"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray_200" />
+
+                <EditText
+                    android:id="@+id/contactor_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:autofillHints="@null"
+                    android:background="@drawable/border_capsule_right_20dp"
+                    android:inputType="text"
+                    android:padding="@dimen/default_padding" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin2"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_capsule_left_20dp"
+                    android:gravity="center_vertical"
+                    android:labelFor="@id/contactor_phone"
+                    android:padding="@dimen/default_padding"
+                    android:text="@string/phone"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray_200" />
+
+                <EditText
+                    android:id="@+id/contactor_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:autofillHints="@null"
+                    android:background="@drawable/border_capsule_right_20dp"
+                    android:inputType="phone"
+                    android:padding="@dimen/default_padding" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin2"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_capsule_left_20dp"
+                    android:gravity="center_vertical"
+                    android:labelFor="@id/contactor_email"
+                    android:padding="@dimen/default_padding"
+                    android:text="@string/email"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray_200" />
+
+                <EditText
+                    android:id="@+id/contactor_email"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:autofillHints="@null"
+                    android:background="@drawable/border_capsule_right_20dp"
+                    android:inputType="textEmailAddress"
+                    android:padding="@dimen/default_padding" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin2"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_capsule_left_20dp"
+                    android:gravity="center_vertical"
+                    android:labelFor="@id/contactor_address_home"
+                    android:padding="@dimen/default_padding"
+                    android:text="@string/address_home"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray_200" />
+
+                <EditText
+                    android:id="@+id/contactor_address_home"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:autofillHints="@null"
+                    android:background="@drawable/border_capsule_right_20dp"
+                    android:inputType="text"
+                    android:padding="@dimen/default_padding" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin2"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_capsule_left_20dp"
+                    android:gravity="center_vertical"
+                    android:labelFor="@id/contactor_address_work"
+                    android:padding="@dimen/default_padding"
+                    android:text="@string/address_work"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray_200" />
+
+                <EditText
+                    android:id="@+id/contactor_address_work"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:autofillHints="@null"
+                    android:background="@drawable/border_capsule_right_20dp"
+                    android:inputType="text"
+                    android:padding="@dimen/default_padding" />
+            </LinearLayout>
+
+        </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>

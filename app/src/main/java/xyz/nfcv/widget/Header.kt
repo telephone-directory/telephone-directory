@@ -1,6 +1,6 @@
 package xyz.nfcv.widget
 
-enum class Header(val value: String, private val index: Int) {
+enum class Header(val value: String, val index: Int) {
     LIKE("收藏", 0),
     A("A", 1),
     B("B", 2),

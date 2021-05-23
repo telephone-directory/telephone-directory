@@ -1,14 +1,21 @@
 package xyz.nfcv.telephone_directory
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.AbsListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.*
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter
+import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
 import xyz.nfcv.telephone_directory.databinding.ActivityMainBinding
+import xyz.nfcv.telephone_directory.model.Person
 import java.util.*
 
 
@@ -27,6 +34,28 @@ class MainActivity : AppCompatActivity() {
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.updatePadding(top = insets.top)
             WindowInsetsCompat.CONSUMED
+        }
+
+        binding.contactorSearch.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.contactorSearchCancel.visibility = View.VISIBLE
+            } else {
+                binding.contactorSearchCancel.visibility = View.GONE
+            }
+        }
+
+        binding.contactorSearchCancel.setOnClickListener {
+            if (currentFocus == binding.contactorSearch) {
+                currentFocus?.let {
+                    (this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+                        it.windowToken,
+                        InputMethodManager.HIDE_NOT_ALWAYS
+                    )
+                }
+                binding.contactorSearch.setText("")
+                binding.contactorSearch.clearFocus()
+            }
+
         }
 
         contactorListAdapter = ContactorListAdapter(this, binding.contactorList)
@@ -56,5 +85,48 @@ class MainActivity : AppCompatActivity() {
         binding.scanQrCode.setOnClickListener {
             binding.fabAddContactor.collapse()
         }
+
+        binding.contactSidebar.addListener { _, header ->
+            if (contactorListAdapter.contains(header)) {
+                Log.d(javaClass.name, "$header")
+                contactorListAdapter.scroll(header)
+            } else {
+                contactorListAdapter.first(binding.contactorList.firstVisiblePosition, binding.contactorList.lastVisiblePosition)?.let {
+                    binding.contactSidebar.setSelected(it, feedback = false)
+                }
+            }
+        }
+        binding.contactorList.setOnScrollListener(object : AbsListView.OnScrollListener {
+            override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
+
+            }
+
+            override fun onScroll(
+                view: AbsListView?,
+                firstVisibleItem: Int,
+                visibleItemCount: Int,
+                totalItemCount: Int
+            ) {
+                val header = contactorListAdapter.first(binding.contactorList.firstVisiblePosition, binding.contactorList.lastVisiblePosition)
+                if (header != null) {
+                    binding.contactSidebar.setSelected(header, feedback = false)
+                }
+            }
+
+        })
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val data: List<PeopleGroup> =
+            Person.all(this)
+                .groupBy { it.first }
+                .toSortedMap { o1, o2 -> o1 - o2 }
+                .map { PeopleGroup(it.key, it.value) }
+
+        contactorListAdapter.update(data)
+        Log.d(javaClass.name, "$data")
     }
 }

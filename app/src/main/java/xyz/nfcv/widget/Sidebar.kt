@@ -7,12 +7,12 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.text.TextPaint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import xyz.nfcv.telephone_directory.R
+import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.abs
 
 class Sidebar : View {
@@ -21,13 +21,17 @@ class Sidebar : View {
     private var selectedColor: Int = Color.BLUE
     private var normalColor: Int = Color.GRAY
     private val items = Header.values()
-    private var selected = 0
-        set(value) {
-            if (value == field) return
-            field = value
-            invalidate()
-            performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
-        }
+    private var _selected = 0
+
+    private val listeners = CopyOnWriteArrayList<(Int, Header) -> Unit>()
+
+    fun addListener(listener: (Int, Header) -> Unit) {
+        listeners.add(listener)
+    }
+
+    fun removeListener(listener: (Int, Header) -> Unit) {
+        listeners.remove(listener)
+    }
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -90,7 +94,7 @@ class Sidebar : View {
                 Header.LIKE -> {
                     val like = "♡"
                     textPaint.let {
-                        if (selected == index) {
+                        if (_selected == index) {
                             it.color = selectedColor
                         } else {
                             it.color = normalColor
@@ -106,7 +110,7 @@ class Sidebar : View {
                 }
                 else -> {
                     textPaint.let {
-                        if (selected == index) {
+                        if (_selected == index) {
                             it.color = selectedColor
                         } else {
                             it.color = normalColor
@@ -158,55 +162,57 @@ class Sidebar : View {
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 val point = event.x to event.y
-                when {
-                    point.second > top && point.second < bottom -> {
-                        Log.d(javaClass.name, "point: $point, item: ${(point.second - top).toInt() / (contentHeight / items.size)}")
-                        selected = (point.second - top).toInt() / (contentHeight / items.size)
-                    }
-                    point.second > bottom -> {
-                        selected = items.lastIndex
-                    }
-                    point.second < top -> {
-                        selected = 0
-                    }
-                }
-//                performHapticFeedback(HapticFeedbackConstants.KEYBOARD_PRESS)
+                val index = (point.second - top).toInt() / (contentHeight / items.size)
+                setSelected(index, feedback = false, ignore = false, callback = true)
             }
 
             MotionEvent.ACTION_UP -> {
                 val point = event.x to event.y
-                when {
-                    point.second > top && point.second < bottom -> {
-                        Log.d(javaClass.name, "point: $point, item: ${(point.second - top).toInt() / (contentHeight / items.size)}")
-                        selected = (point.second - top).toInt() / (contentHeight / items.size)
-                    }
-                    point.second > bottom -> {
-                        selected = items.lastIndex
-                    }
-                    point.second < top -> {
-                        selected = 0
-                    }
-                }
-//                performHapticFeedback(HapticFeedbackConstants.KEYBOARD_RELEASE)
+                val index = (point.second - top).toInt() / (contentHeight / items.size)
+                setSelected(index, feedback = false, ignore = false, callback = true)
             }
 
             MotionEvent.ACTION_MOVE -> {
                 val point = event.x to event.y
-                when {
-                    point.second > top && point.second < bottom -> {
-                        Log.d(javaClass.name, "point: $point, item: ${(point.second - top).toInt() / (contentHeight / items.size)}")
-                        selected = (point.second - top).toInt() / (contentHeight / items.size)
-                    }
-                    point.second > bottom -> {
-                        selected = items.lastIndex
-                    }
-                    point.second < top -> {
-                        selected = 0
-                    }
-                }
+                val index = (point.second - top).toInt() / (contentHeight / items.size)
+                setSelected(index, feedback = false, ignore = true, callback = true)
             }
         }
 
         return true
+    }
+
+    fun setSelected(header: Header, feedback: Boolean) {
+        val index = items.indexOf(header)
+        setSelected(index, feedback = feedback, ignore = true, callback = false)
+    }
+
+    private fun setSelected(selected: Int, feedback: Boolean = false, ignore: Boolean = true, callback: Boolean = true) {
+        if (ignore && selected == _selected) {
+            return
+        }
+
+        if (selected < 0) {
+            setSelected(0, feedback = false, ignore = true, callback = true)
+        } else if (selected > items.lastIndex) {
+            setSelected(items.lastIndex, feedback = false, ignore = true, callback = true)
+        } else {
+            _selected = when {
+                selected > items.lastIndex -> items.lastIndex
+                selected < 0 -> 0
+                else -> selected
+            }
+
+            invalidate()
+
+            if (callback) {
+                listeners.forEach { it(_selected, items[_selected]) }
+            }
+
+            if (feedback) {
+                performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+            }
+        }
+
     }
 }

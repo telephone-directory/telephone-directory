@@ -8,4 +8,12 @@
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="edit_contactor">Edit Contactor</string>
+    <string name="search">Search</string>
+    <string name="avatar">Avatar</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="address_home">Home Address</string>
+    <string name="address_work">Work Address</string>
 </resources>

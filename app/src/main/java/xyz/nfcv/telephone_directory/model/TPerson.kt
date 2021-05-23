@@ -13,6 +13,7 @@ import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper
 import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory.TPerson
 import xyz.nfcv.widget.Header
 import java.util.*
+import java.util.regex.Pattern
 
 
 data class Person(
@@ -211,8 +212,17 @@ data class Person(
         return this.name.compareTo(other.name)
     }
 
-    val last: Char
-        get() = name.trim().uppercase().lastOrNull() ?: '?'
+    val last: String
+        get() {
+            val chinese = Pattern.compile("[\u4e00-\u9fa5]").matcher(name).find()
+            return if (chinese) {
+                "${name.trim().uppercase().lastOrNull() ?: "#"}"
+            } else {
+                val words = name.split(" ").filter { it.isNotBlank() }
+                val l = words.mapNotNull { it.firstOrNull()?.uppercase() }.take(2).joinToString("")
+                if (l.isBlank()) "#" else l
+            }
+        }
 
     val first: Header
         get() {
