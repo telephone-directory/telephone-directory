@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="@dimen/default_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="40dp"
@@ -23,29 +24,12 @@
             android:padding="12dp"
             android:src="@drawable/ic_search" />
 
-        <EditText
+        <TextView
             android:id="@+id/contactor_search"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:autofillHints="@null"
-            android:background="@drawable/border_capsule_right_40dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:hapticFeedbackEnabled="true"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/contactor_search_cancel"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:hapticFeedbackEnabled="true"
-            android:text="@string/cancel"
-            android:textColor="@color/light_blue_400"
-            android:textStyle="bold"
-            android:visibility="gone" />
+            android:background="@drawable/border_capsule_right_40dp" />
     </LinearLayout>
 
 
@@ -70,7 +54,7 @@
         app:selectedColor="@color/teal_200" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/fab_add_contactor"
+        android:id="@+id/fab_contactor_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

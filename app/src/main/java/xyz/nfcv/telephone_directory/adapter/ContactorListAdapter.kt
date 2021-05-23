@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.text.TextPaint
 import android.util.Log
-import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,6 @@ class ContactorListAdapter(
         this.data.clear()
         this.data.addAll(data)
         notifyDataSetChanged()
-
 
         for (i in 0 until groupCount) {
             list.expandGroup(i)
@@ -67,7 +65,7 @@ class ContactorListAdapter(
             lateinit var info: ImageView
         }
 
-        fun getBitmapByChar(text: String, size: Int = 1000): Bitmap {
+        fun String.ofBitmap(size: Int = 1000): Bitmap {
             val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
             canvas.drawBitmap(bitmap, 0f, 0f, null)
@@ -81,7 +79,7 @@ class ContactorListAdapter(
 
             val offset = abs(paint.descent() + paint.ascent()) + size * 3 / 10f
 
-            canvas.drawText(text, size / 2f, offset, paint)
+            canvas.drawText(this, size / 2f, offset, paint)
             return bitmap
         }
     }
@@ -152,7 +150,7 @@ class ContactorListAdapter(
 
         val person = getChild(groupPosition, childPosition)
         holder.name.text = person.name
-        holder.avatar.setImageBitmap(getBitmapByChar(person.last))
+        holder.avatar.setImageBitmap(person.last.ofBitmap())
         holder.info.visibility = View.GONE
         return view
     }
@@ -167,34 +165,25 @@ class ContactorListAdapter(
         if (contains(header)) return header
         val before = data.lastOrNull { it.header.index < header.index }?.header
         val after = data.firstOrNull { it.header.index > header.index }?.header
-        if (after != null && before != null) {
+        return if (after != null && before != null) {
             val diffBefore = abs(header.index - before.index)
             val diffAfter = abs(header.index - after.index)
-            return if (diffBefore > diffAfter) after else before
+            if (diffBefore > diffAfter) after else before
         } else if (after != null && before == null) {
-            return after
+            after
         } else if (after == null && before != null) {
-            return before
+            before
         } else {
             Log.wtf(javaClass.name, "怎么可以发生这样的事情！！！")
-            return data.firstOrNull()?.header
+            data.firstOrNull()?.header
         }
     }
 
     fun scroll(header: Header) {
         val group = data.indexOfFirst { it.header == header }
-        val position = if (group < 0) {
-            data.take(0).sumOf { 1 + it.people.size }
-        } else {
-            data.take(group).sumOf { 1 + it.people.size }
-        }
 
         if (group >= 0) {
             list.setSelectedGroup(group)
-//            val first = first(list.firstVisiblePosition, list.lastVisiblePosition)
-//            if (first != header) {
-//                list.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
-//            }
         }
     }
 
@@ -222,19 +211,5 @@ class ContactorListAdapter(
             position += 1 + group.people.size
         }
         return headers
-    }
-
-    fun last(start: Int, last: Int): Header? {
-        var position = 0
-        val range = start..last
-        val headers = ArrayList<Header>()
-        data.forEach { group ->
-            position += 1 + group.people.size
-            if (position - 1 in range) {
-                headers.add(group.header)
-            }
-        }
-
-        return headers.lastOrNull()
     }
 }

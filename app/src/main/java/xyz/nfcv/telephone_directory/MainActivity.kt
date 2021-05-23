@@ -1,14 +1,11 @@
 package xyz.nfcv.telephone_directory
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.*
@@ -37,43 +34,11 @@ class MainActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        for (i in 0..100) {
-            Person.insert(
-                this,
-                Person(null, "${('A'..'Z').random()} ${('A'..'Z').random()}", "1276512")
-            )
-        }
-
-        for (i in 0..5) {
-            Person.insert(
-                this,
-                Person(null, "${('0'..'9').random()} ${('A'..'Z').random()}", "1276512")
-            )
-        }
-
-        binding.contactorSearch.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.contactorSearchCancel.visibility = View.VISIBLE
-            } else {
-                binding.contactorSearchCancel.visibility = View.GONE
-            }
-        }
-
-        binding.contactorSearchCancel.setOnClickListener {
-            if (currentFocus == binding.contactorSearch) {
-                currentFocus?.let {
-                    (this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
-                        it.windowToken,
-                        InputMethodManager.HIDE_NOT_ALWAYS
-                    )
-                }
-                binding.contactorSearch.setText("")
-                binding.contactorSearch.clearFocus()
-            }
-
-        }
-
         contactorListAdapter = ContactorListAdapter(this, binding.contactorList)
+
+        binding.contactorSearchBar.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
 
         binding.addContactor.setOnTouchListener { v, event ->
             when (event.action) {
@@ -94,18 +59,14 @@ class MainActivity : AppCompatActivity() {
         binding.addContactor.setOnClickListener {
             startActivity(Intent(this, EditContactorActivity::class.java))
 
-            binding.fabAddContactor.collapse()
+            binding.fabContactorMenu.collapse()
         }
 
         binding.scanQrCode.setOnClickListener {
-            binding.fabAddContactor.collapse()
+            binding.fabContactorMenu.collapse()
         }
 
         binding.contactSidebar.addListener { _, header ->
-//            if (contactorListAdapter.contains(header)) {
-//                Log.d(javaClass.name, "$header")
-//                contactorListAdapter.scroll(header)
-//            }
             contactorListAdapter.near(header)?.let {
                 contactorListAdapter.scroll(it)
             }
@@ -148,6 +109,8 @@ class MainActivity : AppCompatActivity() {
                 .groupBy { it.first }
                 .toSortedMap { o1, o2 -> o1 - o2 }
                 .map { PeopleGroup(it.key, it.value) }
+
+        Log.d(javaClass.name, "data size: ${data.sumOf { it.people.size }}")
 
         contactorListAdapter.update(data)
         Log.d(javaClass.name, "$data")
