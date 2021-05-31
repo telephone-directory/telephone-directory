@@ -1,10 +1,7 @@
 package xyz.nfcv.telephone_directory.adapter
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.text.TextPaint
 import android.util.Log
 import android.view.LayoutInflater
@@ -174,7 +171,7 @@ class ContactorListAdapter(
         } else if (after == null && before != null) {
             before
         } else {
-            Log.wtf(javaClass.name, "怎么可以发生这样的事情！！！")
+            Log.w(javaClass.name, "怎么可以发生这样的事情！！！")
             data.firstOrNull()?.header
         }
     }

@@ -3,14 +3,19 @@ package xyz.nfcv.telephone_directory
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
+import android.view.View
 import android.widget.AbsListView
+import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.*
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
+import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper
+import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory.TPerson
 import xyz.nfcv.telephone_directory.databinding.ActivityMainBinding
 import xyz.nfcv.telephone_directory.model.Person
 import xyz.nfcv.widget.Header
@@ -98,6 +103,17 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
+        binding.contactorList.setOnChildClickListener { _, _, group, child, _ ->
+            val person = contactorListAdapter.getChild(group, child)
+            Log.d(javaClass.name, "child click: group=$group, child=$child, item=$person")
+
+            Intent(this, DetailActivity::class.java).apply {
+                putExtra(BaseColumns._ID, person.id)
+            }.let { startActivity(it) }
+
+            true
+        }
 
     }
 

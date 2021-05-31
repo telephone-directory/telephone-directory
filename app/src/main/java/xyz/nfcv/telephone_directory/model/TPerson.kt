@@ -128,6 +128,46 @@ data class Person(
             return persons
         }
 
+        fun select(context: Context, value: String): Person? {
+            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+                helper.readableDatabase.use { db: SQLiteDatabase ->
+                    val cursor = db.query(
+                        TPerson.TABLE_NAME,
+                        arrayOf(
+                            BaseColumns._ID,
+                            TPerson.COLUMN_NAME_NAME,
+                            TPerson.COLUMN_NAME_TELEPHONE,
+                            TPerson.COLUMN_NAME_EMAIL,
+                            TPerson.COLUMN_NAME_WORK_ADDRESS,
+                            TPerson.COLUMN_NAME_HOME_ADDRESS,
+                            TPerson.COLUMN_NAME_LIKE
+                        ),
+                        "${BaseColumns._ID} = ?",
+                        arrayOf(value),
+                        null,
+                        null,
+                        null
+                    )
+                    cursor.use {
+                        with(cursor) {
+                            while (cursor.moveToNext()) {
+                                return Person(
+                                    getString(getColumnIndexOrThrow(BaseColumns._ID)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_NAME)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TELEPHONE)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_EMAIL)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_WORK_ADDRESS)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE))
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            return null
+        }
+
         fun likeName(context: Context, value: String): ArrayList<Person> {
             val persons = arrayListOf<Person>()
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->

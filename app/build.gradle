@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "xyz.nfcv.telephone_directory"
-        minSdk 27
+        minSdk 29
         targetSdk 30
         versionCode 1
         versionName "1.0"

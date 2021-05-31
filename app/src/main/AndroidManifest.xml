@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Telephonedirectory.NoActionBar"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".DetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".SearchActivity"
             android:exported="true" />
         <activity
