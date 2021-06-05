@@ -13,4 +13,10 @@
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
     <color name="gray_200">#E8E9E9</color>
+    <color name="green_300">#81C784</color>
+    <color name="green_600">#43A047</color>
+    <color name="orange_600">#FB8C00</color>
+    <color name="red_600">#E53935</color>
+    <color name="dark_blue_400">#5C6BC0</color>
+
 </resources>

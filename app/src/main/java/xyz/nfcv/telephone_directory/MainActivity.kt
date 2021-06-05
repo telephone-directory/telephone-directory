@@ -7,15 +7,12 @@ import android.provider.BaseColumns
 import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
-import android.view.View
+import android.view.ViewGroup
 import android.widget.AbsListView
-import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.*
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
-import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper
-import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory.TPerson
 import xyz.nfcv.telephone_directory.databinding.ActivityMainBinding
 import xyz.nfcv.telephone_directory.model.Person
 import xyz.nfcv.widget.Header
@@ -36,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.updatePadding(top = insets.top)
+            binding.fabContactorMenu.updateLayoutParams<ViewGroup.MarginLayoutParams> { updateMarginsRelative(bottom = insets.bottom) }
             WindowInsetsCompat.CONSUMED
         }
 
@@ -60,6 +58,15 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnTouchListener false
         }
+
+        binding.readNfcTag.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_PRESS)
+                MotionEvent.ACTION_UP -> v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_RELEASE)
+            }
+            return@setOnTouchListener false
+        }
+
 
         binding.addContactor.setOnClickListener {
             startActivity(Intent(this, AddContactorActivity::class.java))

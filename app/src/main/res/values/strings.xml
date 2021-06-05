@@ -15,4 +15,16 @@
     <string name="address">地址</string>
     <string name="address_home">家庭住址</string>
     <string name="address_work">工作单位</string>
+    <string name="scheme" translatable="false">tty</string>
+    <string name="path" translatable="false">/contactor/add</string>
+    <string name="host" translatable="false">nfcv.xyz</string>
+    <string name="phone_example" translatable="false">17712345678</string>
+    <string name="share">分享</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
+    <string name="like">收藏</string>
+    <string name="example_phone_place" translatable="false">浙江杭州 电信</string>
+    <string name="email_example">wcf@zjut.edu.cn</string>
+    <string name="address_example">杭州市留下街道留和路288号浙江工业大学屏峰校区</string>
+
 </resources>

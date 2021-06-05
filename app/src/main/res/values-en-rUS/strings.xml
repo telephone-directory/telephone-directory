@@ -16,4 +16,10 @@
     <string name="address">Address</string>
     <string name="address_home">Home Address</string>
     <string name="address_work">Work Address</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="like">Like</string>
+    <string name="email_example">wcf@zjut.edu.cn</string>
+    <string name="address_example">杭州市留下街道留和路288号浙江工业大学屏峰校区</string>
 </resources>

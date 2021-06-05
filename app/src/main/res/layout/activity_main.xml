@@ -59,7 +59,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
         app:fab_addButtonColorNormal="#4CAF50">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -67,8 +70,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="#FF9800"
-            app:fab_icon="@drawable/ic_scan"
-            app:fab_title="scan"
+            app:fab_icon="@drawable/ic_scan_qr"
+            app:fab_title="scan qr code"
+            app:rippleColor="#FF3030" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/read_nfc_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="#DCE775"
+            app:fab_icon="@drawable/ic_nfc"
+            app:fab_title="read nfc tag"
             app:rippleColor="#FF3030" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -76,8 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="#E57373"
-            app:fab_icon="@drawable/ic_add"
-            app:fab_title="add"
+            app:fab_icon="@drawable/ic_person_add"
+            app:fab_title="add contactor"
             app:rippleColor="#FF3030" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>

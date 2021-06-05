@@ -42,11 +42,193 @@
                     tools:ignore="RelativeOverlap" />
             </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="48dp">
+            <RelativeLayout
+                android:id="@+id/detail_phone_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/detail_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@string/phone_example"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detail_phone_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_phone"
+                    android:background="@drawable/border_capsule_16dp"
+                    android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/phone"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/detail_phone_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_phone"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/detail_phone_type"
+                    android:maxLines="1"
+                    android:text="@string/example_phone_place"
+                    android:textColor="@color/gray_600"
+                    android:textSize="12sp" />
+
+                <xyz.nfcv.widget.RoundImageView
+                    android:id="@+id/detail_phone_call"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/green_600"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_call"
+                    app:radius="18dp" />
+
+                <xyz.nfcv.widget.RoundImageView
+                    android:id="@+id/detail_phone_message"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:layout_toStartOf="@id/detail_phone_call"
+                    android:background="@color/light_blue_600"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_message"
+                    app:radius="18dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/detail_email_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin">
+
+                <TextView
+                    android:id="@+id/detail_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@string/email_example"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detail_email_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_email"
+                    android:background="@drawable/border_capsule_16dp"
+                    android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/email"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <xyz.nfcv.widget.RoundImageView
+                    android:id="@+id/detail_email_send"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/orange_600"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_email"
+                    app:radius="18dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/detail_home_address_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin">
+
+                <TextView
+                    android:id="@+id/detail_home_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:layout_toStartOf="@id/detail_home_address_navigate"
+                    android:ellipsize="middle"
+                    android:maxLines="1"
+                    android:text="@string/address_example"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detail_home_address_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_home_address"
+                    android:background="@drawable/border_capsule_16dp"
+                    android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/address_home"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <xyz.nfcv.widget.RoundImageView
+                    android:id="@+id/detail_home_address_navigate"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/dark_blue_400"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_home"
+                    app:radius="18dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/detail_work_address_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin">
+
+                <TextView
+                    android:id="@+id/detail_work_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:layout_toStartOf="@id/detail_work_address_navigate"
+                    android:ellipsize="middle"
+                    android:maxLines="1"
+                    android:text="@string/address_example"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detail_work_address_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_work_address"
+                    android:background="@drawable/border_capsule_16dp"
+                    android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/address_work"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <xyz.nfcv.widget.RoundImageView
+                    android:id="@+id/detail_work_address_navigate"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/red_600"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_place"
+                    app:radius="18dp" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -64,7 +246,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="收藏"
+            android:text="@string/like"
             android:textAlignment="center"
             app:drawableTopCompat="@drawable/ic_dislike" />
 
@@ -74,7 +256,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="编辑"
+            android:text="@string/edit"
             android:textAlignment="center"
             app:drawableTopCompat="@drawable/ic_edit" />
 
@@ -83,7 +265,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="删除"
+            android:text="@string/delete"
             android:textAlignment="center"
             app:drawableTopCompat="@drawable/ic_delete" />
 
@@ -92,7 +274,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="分享"
+            android:text="@string/share"
             android:textAlignment="center"
             app:drawableTopCompat="@drawable/ic_share" />
     </LinearLayout>

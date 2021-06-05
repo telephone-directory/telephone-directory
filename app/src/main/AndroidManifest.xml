@@ -4,6 +4,11 @@
     package="xyz.nfcv.telephone_directory">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -13,6 +18,32 @@
         android:theme="@style/Theme.Telephonedirectory.NoActionBar"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".NfcTagActivity"
+            android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                <data-->
+<!--                    android:host="@string/host"-->
+<!--                    android:path="@string/path"-->
+<!--                    android:scheme="@string/scheme" />-->
+<!--            </intent-filter>-->
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="@string/host"
+                    android:path="@string/path"
+                    android:scheme="@string/scheme" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".DetailActivity"
             android:exported="true" />
         <activity
@@ -20,6 +51,10 @@
             android:exported="true" />
         <activity
             android:name=".AddContactorActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".EditContactorActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
