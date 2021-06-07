@@ -14,6 +14,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.ofBitmap
+import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory.TPerson
 import xyz.nfcv.telephone_directory.databinding.ActivityAddContactorBinding
 import xyz.nfcv.telephone_directory.model.Person
 import java.util.*
@@ -96,6 +97,31 @@ class AddContactorActivity : AppCompatActivity() {
             }
             return@setOnTouchListener false
         }
+
+        val name = intent.getStringExtra(TPerson.COLUMN_NAME_NAME)?.trim()
+        if (!name.isNullOrBlank()) {
+            binding.contactorName.setText(name)
+        }
+
+        val telephone = intent.getStringExtra(TPerson.COLUMN_NAME_TELEPHONE)?.trim()
+        if (!telephone.isNullOrBlank()) {
+            binding.contactorPhone.setText(telephone)
+        }
+
+        val email = intent.getStringExtra(TPerson.COLUMN_NAME_EMAIL)?.trim()
+        if (!email.isNullOrBlank()) {
+            binding.contactorEmail.setText(email)
+        }
+
+        val workAddress = intent.getStringExtra(TPerson.COLUMN_NAME_WORK_ADDRESS)?.trim()
+        if (!workAddress.isNullOrBlank()) {
+            binding.contactorAddressWork.setText(workAddress)
+        }
+
+        val homeAddress = intent.getStringExtra(TPerson.COLUMN_NAME_HOME_ADDRESS)?.trim()
+        if (!workAddress.isNullOrBlank()) {
+            binding.contactorAddressHome.setText(homeAddress)
+        }
     }
 
     companion object {
@@ -106,7 +132,8 @@ class AddContactorActivity : AppCompatActivity() {
                     "${this.trim().uppercase().lastOrNull() ?: "#"}"
                 } else {
                     val words = this.split(" ").filter { it.isNotBlank() }
-                    val l = words.mapNotNull { it.firstOrNull()?.uppercase() }.take(2).joinToString("")
+                    val l =
+                        words.mapNotNull { it.firstOrNull()?.uppercase() }.take(2).joinToString("")
                     if (l.isBlank()) "#" else l
                 }
             }

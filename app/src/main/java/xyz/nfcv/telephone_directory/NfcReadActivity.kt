@@ -14,6 +14,7 @@ import androidx.core.view.updatePadding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.ofBitmap
+import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory.TPerson
 import xyz.nfcv.telephone_directory.databinding.ActivityNfcReadBinding
 import xyz.nfcv.telephone_directory.model.Person
 import xyz.nfcv.util.hex
@@ -55,6 +56,18 @@ class NfcReadActivity : AppCompatActivity() {
                 binding.nfcCard.detailEmail.text = person.email ?: "无"
                 binding.nfcCard.detailWorkAddress.text = person.workAddress ?: "无"
                 binding.nfcCard.detailHomeAddress.text = person.homeAddress ?: "无"
+                binding.nfcCard.detailAddToContactorList.setOnClickListener {
+                    Intent(this, AddContactorActivity::class.java).apply {
+                        putExtra(TPerson.COLUMN_NAME_NAME, person.name)
+                        putExtra(TPerson.COLUMN_NAME_TELEPHONE, person.telephone)
+                        putExtra(TPerson.COLUMN_NAME_EMAIL, person.email)
+                        putExtra(TPerson.COLUMN_NAME_WORK_ADDRESS, person.workAddress)
+                        putExtra(TPerson.COLUMN_NAME_HOME_ADDRESS, person.homeAddress)
+                    }.apply {
+                        startActivity(this)
+                        finish()
+                    }
+                }
                 binding.nfcNote.visibility = View.GONE
                 binding.nfcCardParent.visibility = View.VISIBLE
             } else {

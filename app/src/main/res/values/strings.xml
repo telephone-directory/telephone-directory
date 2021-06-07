@@ -26,5 +26,6 @@
     <string name="example_phone_place" translatable="false">浙江杭州 电信</string>
     <string name="email_example">wcf@zjut.edu.cn</string>
     <string name="address_example">杭州市留下街道留和路288号浙江工业大学屏峰校区</string>
+    <string name="add_to_contactor_list">添加到通讯录</string>
 
 </resources>

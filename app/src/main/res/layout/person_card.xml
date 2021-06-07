@@ -161,6 +161,13 @@
                     android:textSize="18sp" />
 
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/detail_add_to_contactor_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="@string/add_to_contactor_list" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
