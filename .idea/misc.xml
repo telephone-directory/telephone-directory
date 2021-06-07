@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.2361111111111111" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/border_capsule_28dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/border_capsule_16dp.xml" value="0.12236842105263158" />
@@ -42,14 +42,16 @@
         <entry key="app/src/main/res/layout/contact_group_header.xml" value="0.21385281385281385" />
         <entry key="app/src/main/res/layout/contact_header.xml" value="0.25729166666666664" />
         <entry key="app/src/main/res/layout/detail_info_item.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/person_card.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/sample_sidebar.xml" value="0.1985077714644152" />
         <entry key="app/src/main/res/layout/sidebar_item.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="app/src/main/res/xml/nfc_tech_filter.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="azul-15" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="azul-15" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

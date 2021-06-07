@@ -78,6 +78,11 @@ class MainActivity : AppCompatActivity() {
             binding.fabContactorMenu.collapse()
         }
 
+        binding.readNfcTag.setOnClickListener {
+            startActivity(Intent(this, NfcTagActivity::class.java))
+            binding.fabContactorMenu.collapse()
+        }
+
         binding.contactSidebar.addListener { _, header ->
             contactorListAdapter.near(header)?.let {
                 contactorListAdapter.scroll(it)

@@ -19,18 +19,8 @@
         tools:ignore="AllowBackup">
         <activity
             android:name=".NfcTagActivity"
+            android:launchMode="singleInstance"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-
-<!--                <data-->
-<!--                    android:host="@string/host"-->
-<!--                    android:path="@string/path"-->
-<!--                    android:scheme="@string/scheme" />-->
-<!--            </intent-filter>-->
 
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />

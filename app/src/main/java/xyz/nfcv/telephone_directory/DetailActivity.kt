@@ -2,6 +2,10 @@ package xyz.nfcv.telephone_directory
 
 import android.content.Intent
 import android.net.Uri
+import android.nfc.NdefMessage
+import android.nfc.NdefRecord
+import android.nfc.NfcAdapter
+import android.nfc.tech.MifareClassic
 import android.os.Bundle
 import android.provider.BaseColumns
 import android.util.Log
@@ -13,9 +17,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import com.google.gson.Gson
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.ofBitmap
 import xyz.nfcv.telephone_directory.databinding.ActivityDetailBinding
 import xyz.nfcv.telephone_directory.model.Person
+import xyz.nfcv.util.urlencode
 import java.net.URLEncoder
 
 class DetailActivity : AppCompatActivity() {
@@ -135,6 +141,32 @@ class DetailActivity : AppCompatActivity() {
             }
         } else {
             binding.detailHomeAddressItem.visibility = View.GONE
+        }
+
+        binding.detailShare.setOnClickListener {
+            val nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+            val flags = NfcAdapter.FLAG_READER_NFC_A or
+                    NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK or
+                    NfcAdapter.FLAG_READER_NO_PLATFORM_SOUNDS
+            nfcAdapter.enableReaderMode(this, {
+                val scheme = getString(R.string.scheme)
+                val host = getString(R.string.host)
+                val path = getString(R.string.path)
+                val uri = Uri.parse("$scheme://$host$path?data=${Gson().toJson(person).urlencode}")
+                try {
+                    val classic = MifareClassic.get(it)
+                    classic.connect()
+
+                    classic.close()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    runOnUiThread {
+                        Toast.makeText(this, "写入失败", Toast.LENGTH_SHORT).show()
+                    }
+                } finally {
+                    nfcAdapter.disableReaderMode(this)
+                }
+            }, flags, null)
         }
     }
 
