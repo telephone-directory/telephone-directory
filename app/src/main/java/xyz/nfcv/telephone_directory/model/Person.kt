@@ -10,6 +10,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType
 import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper
+import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory
 import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory.TPerson
 import xyz.nfcv.widget.Header
 import java.util.*
@@ -23,7 +24,9 @@ data class Person(
     var email: String? = null,
     var workAddress: String? = null,
     var homeAddress: String? = null,
-    var like: Int = 0
+    var like: Int = 0,
+    var status: Int = 0,
+    var time: Long = 0L
 ) : Comparable<Person> {
 
     companion object {
@@ -31,6 +34,8 @@ data class Person(
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     for (person in persons) {
+                        person.status = TelephoneDirectory.LOCAL_INSERT
+                        person.time = System.currentTimeMillis()
                         val contentValues = ContentValues()
                         contentValues.put(BaseColumns._ID, UUID.randomUUID().toString())
                         contentValues.put(TPerson.COLUMN_NAME_NAME, person.name)
@@ -39,6 +44,8 @@ data class Person(
                         contentValues.put(TPerson.COLUMN_NAME_WORK_ADDRESS, person.workAddress)
                         contentValues.put(TPerson.COLUMN_NAME_HOME_ADDRESS, person.homeAddress)
                         contentValues.put(TPerson.COLUMN_NAME_LIKE, person.like)
+                        contentValues.put(TPerson.COLUMN_NAME_STATUS, person.status)
+                        contentValues.put(TPerson.COLUMN_NAME_TIME, person.time)
                         db.insert(TPerson.TABLE_NAME, null, contentValues)
                     }
                 }
@@ -52,8 +59,14 @@ data class Person(
 
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
-                    return db.delete(
+                    person.status = TelephoneDirectory.LOCAL_DELETE
+                    person.time = System.currentTimeMillis()
+                    val contentValues = ContentValues()
+                    contentValues.put(TPerson.COLUMN_NAME_STATUS, person.status)
+                    contentValues.put(TPerson.COLUMN_NAME_TIME, person.time)
+                    return db.update(
                         TPerson.TABLE_NAME,
+                        contentValues,
                         "${BaseColumns._ID} = ?",
                         arrayOf(person.id)
                     )
@@ -68,6 +81,8 @@ data class Person(
 
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
+                    person.status = TelephoneDirectory.LOCAL_MODIFY
+                    person.time = System.currentTimeMillis()
                     val contentValues = ContentValues()
                     contentValues.put(TPerson.COLUMN_NAME_NAME, person.name)
                     contentValues.put(TPerson.COLUMN_NAME_TELEPHONE, person.telephone)
@@ -75,6 +90,8 @@ data class Person(
                     contentValues.put(TPerson.COLUMN_NAME_WORK_ADDRESS, person.workAddress)
                     contentValues.put(TPerson.COLUMN_NAME_HOME_ADDRESS, person.homeAddress)
                     contentValues.put(TPerson.COLUMN_NAME_LIKE, person.like)
+                    contentValues.put(TPerson.COLUMN_NAME_STATUS, person.status)
+                    contentValues.put(TPerson.COLUMN_NAME_TIME, person.time)
                     return db.update(
                         TPerson.TABLE_NAME,
                         contentValues,
@@ -98,7 +115,56 @@ data class Person(
                             TPerson.COLUMN_NAME_EMAIL,
                             TPerson.COLUMN_NAME_WORK_ADDRESS,
                             TPerson.COLUMN_NAME_HOME_ADDRESS,
-                            TPerson.COLUMN_NAME_LIKE
+                            TPerson.COLUMN_NAME_LIKE,
+                            TPerson.COLUMN_NAME_STATUS,
+                            TPerson.COLUMN_NAME_TIME
+                        ),
+                        "${TPerson.COLUMN_NAME_STATUS} >= 0",
+                        null,
+                        null,
+                        null,
+                        null
+                    )
+                    cursor.use {
+                        with(cursor) {
+                            while (cursor.moveToNext()) {
+                                val person = Person(
+                                    getString(getColumnIndexOrThrow(BaseColumns._ID)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_NAME)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TELEPHONE)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_EMAIL)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_WORK_ADDRESS)),
+                                    getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_STATUS)),
+                                    getLong(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TIME))
+                                )
+                                persons.add(person)
+                            }
+                        }
+                    }
+                }
+            }
+
+            return persons
+        }
+
+        fun allWithStatus(context: Context): List<Person> {
+            val persons = arrayListOf<Person>()
+            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+                helper.readableDatabase.use { db: SQLiteDatabase ->
+                    val cursor = db.query(
+                        TPerson.TABLE_NAME,
+                        arrayOf(
+                            BaseColumns._ID,
+                            TPerson.COLUMN_NAME_NAME,
+                            TPerson.COLUMN_NAME_TELEPHONE,
+                            TPerson.COLUMN_NAME_EMAIL,
+                            TPerson.COLUMN_NAME_WORK_ADDRESS,
+                            TPerson.COLUMN_NAME_HOME_ADDRESS,
+                            TPerson.COLUMN_NAME_LIKE,
+                            TPerson.COLUMN_NAME_STATUS,
+                            TPerson.COLUMN_NAME_TIME
                         ),
                         null,
                         null,
@@ -116,7 +182,9 @@ data class Person(
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_EMAIL)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_WORK_ADDRESS)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS)),
-                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE))
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_STATUS)),
+                                    getLong(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TIME))
                                 )
                                 persons.add(person)
                             }
@@ -140,9 +208,11 @@ data class Person(
                             TPerson.COLUMN_NAME_EMAIL,
                             TPerson.COLUMN_NAME_WORK_ADDRESS,
                             TPerson.COLUMN_NAME_HOME_ADDRESS,
-                            TPerson.COLUMN_NAME_LIKE
+                            TPerson.COLUMN_NAME_LIKE,
+                            TPerson.COLUMN_NAME_STATUS,
+                            TPerson.COLUMN_NAME_TIME
                         ),
-                        "${BaseColumns._ID} = ?",
+                        "${TPerson.COLUMN_NAME_STATUS} >= 0 and ${BaseColumns._ID} = ?",
                         arrayOf(value),
                         null,
                         null,
@@ -158,7 +228,9 @@ data class Person(
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_EMAIL)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_WORK_ADDRESS)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS)),
-                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE))
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_STATUS)),
+                                    getLong(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TIME))
                                 )
                             }
                         }
@@ -181,9 +253,11 @@ data class Person(
                             TPerson.COLUMN_NAME_EMAIL,
                             TPerson.COLUMN_NAME_WORK_ADDRESS,
                             TPerson.COLUMN_NAME_HOME_ADDRESS,
-                            TPerson.COLUMN_NAME_LIKE
+                            TPerson.COLUMN_NAME_LIKE,
+                            TPerson.COLUMN_NAME_STATUS,
+                            TPerson.COLUMN_NAME_TIME
                         ),
-                        "${TPerson.COLUMN_NAME_NAME} like ?",
+                        "${TPerson.COLUMN_NAME_STATUS} >= 0 and ${TPerson.COLUMN_NAME_NAME} like ?",
                         arrayOf("%${value}%"),
                         null,
                         null,
@@ -199,7 +273,9 @@ data class Person(
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_EMAIL)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_WORK_ADDRESS)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS)),
-                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE))
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_STATUS)),
+                                    getLong(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TIME))
                                 )
                                 persons.add(person)
                             }
@@ -224,9 +300,10 @@ data class Person(
                             TPerson.COLUMN_NAME_EMAIL,
                             TPerson.COLUMN_NAME_WORK_ADDRESS,
                             TPerson.COLUMN_NAME_HOME_ADDRESS,
-                            TPerson.COLUMN_NAME_LIKE
+                            TPerson.COLUMN_NAME_LIKE,
+
                         ),
-                        "${TPerson.COLUMN_NAME_WORK_ADDRESS} like ? or ${TPerson.COLUMN_NAME_HOME_ADDRESS} like ?",
+                        "${TPerson.COLUMN_NAME_STATUS} >= 0 and ${TPerson.COLUMN_NAME_WORK_ADDRESS} like ? or ${TPerson.COLUMN_NAME_HOME_ADDRESS} like ?",
                         arrayOf("%${value}%", "%${value}%"),
                         null,
                         null,
@@ -242,7 +319,9 @@ data class Person(
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_EMAIL)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_WORK_ADDRESS)),
                                     getString(getColumnIndexOrThrow(TPerson.COLUMN_NAME_HOME_ADDRESS)),
-                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE))
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_LIKE)),
+                                    getInt(getColumnIndexOrThrow(TPerson.COLUMN_NAME_STATUS)),
+                                    getLong(getColumnIndexOrThrow(TPerson.COLUMN_NAME_TIME))
                                 )
                                 persons.add(person)
                             }
@@ -253,8 +332,6 @@ data class Person(
 
             return persons
         }
-
-
     }
 
     override fun compareTo(other: Person): Int {

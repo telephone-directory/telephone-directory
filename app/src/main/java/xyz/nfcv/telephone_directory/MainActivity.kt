@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.readNfcTag.setOnClickListener {
-            startActivity(Intent(this, NfcTagActivity::class.java))
+            startActivity(Intent(this, NfcReadActivity::class.java))
             binding.fabContactorMenu.collapse()
         }
 

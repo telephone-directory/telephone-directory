@@ -12,7 +12,7 @@ class DatabasePersonTest {
     fun getAll() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val persons = Person.all(appContext)
+        val persons = Person.allWithStatus(appContext)
         persons.forEach(::println)
     }
 

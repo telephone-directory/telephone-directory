@@ -1,6 +1,8 @@
 package xyz.nfcv.telephone_directory
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -31,6 +33,9 @@ class SearchActivity : AppCompatActivity() {
 
         searchContactorAdapter = SearchContactorAdapter(this, binding.contactorSearchList) {position: Int, person: Person ->
             Log.d(javaClass.name, "item: $position $person")
+            Intent(this, DetailActivity::class.java).apply {
+                putExtra(BaseColumns._ID, person.id)
+            }.let { startActivity(it) }
         }
 
         binding.contactorSearchCancel.setOnClickListener {

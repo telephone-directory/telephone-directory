@@ -36,7 +36,9 @@
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_edit_contactor.xml" value="0.12183908045977011" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15921052631578947" />
+        <entry key="app/src/main/res/layout/activity_nfc_read.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_nfc_tag.xml" value="0.21385281385281385" />
+        <entry key="app/src/main/res/layout/activity_nfc_write.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.11140350877192982" />
         <entry key="app/src/main/res/layout/contact_child_people.xml" value="0.25333333333333335" />
         <entry key="app/src/main/res/layout/contact_group_header.xml" value="0.21385281385281385" />

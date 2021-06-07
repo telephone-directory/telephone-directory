@@ -3,7 +3,6 @@ package xyz.nfcv.util
 import java.io.File
 import java.net.URLDecoder
 import java.net.URLEncoder
-import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.security.MessageDigest
@@ -154,10 +153,15 @@ val Long.bytes: ByteArray
         return bytes
     }
 
-val HEX_CHAR = arrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
+val HEX_CHAR =
+    arrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
 
 val ByteArray.hex: String
-    get() = this.joinToString(separator = "") { "${HEX_CHAR[it.toInt().shr(4).and(0xf)]}${HEX_CHAR[it.toInt().and(0xf)]}" }
+    get() = this.joinToString(separator = "") {
+        "${
+            HEX_CHAR[it.toInt().shr(4).and(0xf)]
+        }${HEX_CHAR[it.toInt().and(0xf)]}"
+    }
 
 val String.file: ByteArray
     get() = Files.readAllBytes(Paths.get(this))

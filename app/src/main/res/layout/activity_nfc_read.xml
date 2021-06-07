@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NfcReadActivity">
+
+    <TextView
+        android:id="@+id/nfc_note"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="请贴近联系人卡片"
+        android:textSize="28sp" />
+
+    <ScrollView
+        android:id="@+id/nfc_card_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <include android:id="@+id/nfc_card" layout="@layout/person_card" />
+    </ScrollView>
+
+</FrameLayout>
