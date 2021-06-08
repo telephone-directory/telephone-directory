@@ -32,6 +32,7 @@
         <entry key="app/src/main/res/drawable/ic_scan.xml" value="0.23026315789473684" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.11929824561403508" />
         <entry key="app/src/main/res/drawable/ic_share_48px.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_account.xml" value="0.10877192982456141" />
         <entry key="app/src/main/res/layout/activity_add_contactor.xml" value="0.10394736842105264" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_edit_contactor.xml" value="0.12183908045977011" />

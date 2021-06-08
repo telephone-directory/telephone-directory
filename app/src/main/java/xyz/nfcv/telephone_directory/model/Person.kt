@@ -52,6 +52,28 @@ data class Person(
             }
         }
 
+        fun insertCloud(context: Context, vararg persons: Person) {
+            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+                helper.writableDatabase.use { db: SQLiteDatabase ->
+                    for (person in persons) {
+                        person.status = TelephoneDirectory.SYNCED
+                        person.time = System.currentTimeMillis()
+                        val contentValues = ContentValues()
+                        contentValues.put(BaseColumns._ID, UUID.randomUUID().toString())
+                        contentValues.put(TPerson.COLUMN_NAME_NAME, person.name)
+                        contentValues.put(TPerson.COLUMN_NAME_TELEPHONE, person.telephone)
+                        contentValues.put(TPerson.COLUMN_NAME_EMAIL, person.email)
+                        contentValues.put(TPerson.COLUMN_NAME_WORK_ADDRESS, person.workAddress)
+                        contentValues.put(TPerson.COLUMN_NAME_HOME_ADDRESS, person.homeAddress)
+                        contentValues.put(TPerson.COLUMN_NAME_LIKE, person.like)
+                        contentValues.put(TPerson.COLUMN_NAME_STATUS, person.status)
+                        contentValues.put(TPerson.COLUMN_NAME_TIME, person.time)
+                        db.insert(TPerson.TABLE_NAME, null, contentValues)
+                    }
+                }
+            }
+        }
+
         fun delete(context: Context, person: Person): Int {
             if (person.id == null) {
                 return -1
@@ -74,6 +96,22 @@ data class Person(
             }
         }
 
+        fun deleteCloud(context: Context, person: Person): Int {
+            if (person.id == null) {
+                return -1
+            }
+
+            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+                helper.writableDatabase.use { db: SQLiteDatabase ->
+                    return db.delete(
+                        TPerson.TABLE_NAME,
+                        "${BaseColumns._ID} = ?",
+                        arrayOf(person.id)
+                    )
+                }
+            }
+        }
+
         fun update(context: Context, person: Person): Int {
             if (person.id == null) {
                 return -1
@@ -82,6 +120,34 @@ data class Person(
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     person.status = TelephoneDirectory.LOCAL_MODIFY
+                    person.time = System.currentTimeMillis()
+                    val contentValues = ContentValues()
+                    contentValues.put(TPerson.COLUMN_NAME_NAME, person.name)
+                    contentValues.put(TPerson.COLUMN_NAME_TELEPHONE, person.telephone)
+                    contentValues.put(TPerson.COLUMN_NAME_EMAIL, person.email)
+                    contentValues.put(TPerson.COLUMN_NAME_WORK_ADDRESS, person.workAddress)
+                    contentValues.put(TPerson.COLUMN_NAME_HOME_ADDRESS, person.homeAddress)
+                    contentValues.put(TPerson.COLUMN_NAME_LIKE, person.like)
+                    contentValues.put(TPerson.COLUMN_NAME_STATUS, person.status)
+                    contentValues.put(TPerson.COLUMN_NAME_TIME, person.time)
+                    return db.update(
+                        TPerson.TABLE_NAME,
+                        contentValues,
+                        "${BaseColumns._ID} = ?",
+                        arrayOf(person.id)
+                    )
+                }
+            }
+        }
+
+        fun updateCloud(context: Context, person: Person): Int {
+            if (person.id == null) {
+                return -1
+            }
+
+            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+                helper.writableDatabase.use { db: SQLiteDatabase ->
+                    person.status = TelephoneDirectory.SYNCED
                     person.time = System.currentTimeMillis()
                     val contentValues = ContentValues()
                     contentValues.put(TPerson.COLUMN_NAME_NAME, person.name)
