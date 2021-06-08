@@ -1,6 +1,7 @@
 package xyz.nfcv.telephone_directory
 
 import android.content.Intent
+import android.net.Uri
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.os.Bundle
@@ -34,46 +35,84 @@ class NfcReadActivity : AppCompatActivity() {
             view.updatePadding(top = insets.top, bottom = insets.bottom)
             WindowInsetsCompat.CONSUMED
         }
+
+        Log.d(javaClass.name, "onCreate")
     }
 
     override fun onStart() {
         super.onStart()
+        Log.d(javaClass.name, "onStart")
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        val person = intent?.data?.read()
+        if (person != null) {
+            show(person)
+        } else {
+            waitTag()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(javaClass.name, "onStop")
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(javaClass.name, "onDestroy")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(javaClass.name, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(javaClass.name, "onPause")
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        val tag = intent?.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
-        Log.d(javaClass.name, "TAG ID: ${tag?.id?.hex?.uppercase()}")
-        tag?.let {
-            val uri = intent.data
-            val data = uri?.getQueryParameter("data")
-            val person: Person? = Gson().fromJson(data, object : TypeToken<Person>() {}.type)
-            if (person != null) {
-                binding.nfcCard.detailPeopleName.text = person.name
-                binding.nfcCard.detailPhone.text = person.telephone
-                binding.nfcCard.detailPeopleAvatar.setImageBitmap(person.last.ofBitmap())
-                binding.nfcCard.detailEmail.text = person.email ?: "无"
-                binding.nfcCard.detailWorkAddress.text = person.workAddress ?: "无"
-                binding.nfcCard.detailHomeAddress.text = person.homeAddress ?: "无"
-                binding.nfcCard.detailAddToContactorList.setOnClickListener {
-                    Intent(this, AddContactorActivity::class.java).apply {
-                        putExtra(TPerson.COLUMN_NAME_NAME, person.name)
-                        putExtra(TPerson.COLUMN_NAME_TELEPHONE, person.telephone)
-                        putExtra(TPerson.COLUMN_NAME_EMAIL, person.email)
-                        putExtra(TPerson.COLUMN_NAME_WORK_ADDRESS, person.workAddress)
-                        putExtra(TPerson.COLUMN_NAME_HOME_ADDRESS, person.homeAddress)
-                    }.apply {
-                        startActivity(this)
-                        finish()
-                    }
-                }
-                binding.nfcNote.visibility = View.GONE
-                binding.nfcCardParent.visibility = View.VISIBLE
-            } else {
-                binding.nfcNote.visibility = View.VISIBLE
-                binding.nfcCardParent.visibility = View.GONE
+        Log.d(javaClass.name, "onNewIntent")
+        val person = intent?.data?.read()
+        if (person != null) {
+            show(person)
+        } else {
+            waitTag()
+        }
+    }
+
+    private fun Uri.read(): Person? {
+        val data = this.getQueryParameter("data")
+        return Gson().fromJson(data, object : TypeToken<Person>() {}.type)
+    }
+
+    private fun show(person: Person) {
+        binding.nfcCard.detailPeopleName.text = person.name
+        binding.nfcCard.detailPhone.text = person.telephone
+        binding.nfcCard.detailPeopleAvatar.setImageBitmap(person.last.ofBitmap())
+        binding.nfcCard.detailEmail.text = person.email ?: "无"
+        binding.nfcCard.detailWorkAddress.text = person.workAddress ?: "无"
+        binding.nfcCard.detailHomeAddress.text = person.homeAddress ?: "无"
+        binding.nfcCard.detailAddToContactorList.setOnClickListener {
+            Intent(this, AddContactorActivity::class.java).apply {
+                putExtra(TPerson.COLUMN_NAME_NAME, person.name)
+                putExtra(TPerson.COLUMN_NAME_TELEPHONE, person.telephone)
+                putExtra(TPerson.COLUMN_NAME_EMAIL, person.email)
+                putExtra(TPerson.COLUMN_NAME_WORK_ADDRESS, person.workAddress)
+                putExtra(TPerson.COLUMN_NAME_HOME_ADDRESS, person.homeAddress)
+            }.apply {
+                startActivity(this)
+                finish()
             }
         }
+        binding.nfcNote.visibility = View.GONE
+        binding.nfcCardParent.visibility = View.VISIBLE
+    }
+
+    private fun waitTag() {
+        binding.nfcNote.visibility = View.VISIBLE
+        binding.nfcCardParent.visibility = View.GONE
     }
 }
