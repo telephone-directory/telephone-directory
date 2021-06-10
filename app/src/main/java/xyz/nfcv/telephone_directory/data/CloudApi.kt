@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Header
 import retrofit2.http.POST
 import xyz.nfcv.telephone_directory.model.Person
 import xyz.nfcv.telephone_directory.model.User
@@ -37,14 +38,14 @@ interface CloudApi {
     @POST("/user/login")
     @FormUrlEncoded
     fun login(
-        @Field("userName") username: String,
+        @Field("username") username: String,
         @Field("password") password: String
     ): Call<Result<User>>
 
     @POST("/user/add")
     @FormUrlEncoded
     fun register(
-        @Field("userName") username: String,
+        @Field("username") username: String,
         @Field("password") password: String
     ): Call<Result<Any>>
 
@@ -55,11 +56,11 @@ interface CloudApi {
         @Field("token") token: String
     ): Call<Result<Any>>
 
-    @POST("/person/diff")
+    @POST("/person/sync")
     @FormUrlEncoded
-    fun diff(
-        @Field("userId") userId: String,
-        @Field("token") token: String,
+    fun sync(
+        @Header("UserId") userId: String,
+        @Header("Token") token: String,
         @Field("local") local: List<Person>
     ): Call<Result<List<Cloud.Record>>>
 }

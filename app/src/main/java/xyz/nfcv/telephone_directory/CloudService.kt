@@ -37,7 +37,7 @@ class CloudService : Service() {
     fun sync(finish: () -> Unit) {
         val user = Account.get(this)
         if (user != null) {
-            cloud.diff(user.userId, user.token, Person.allWithStatus(this))
+            cloud.sync(user.userId, user.token, Person.allWithStatus(this))
                 .enqueue(defaultCallback { code: Int, data: List<Record>? ->
                     if (code != 200 || data == null) {
                         Log.d(javaClass.name, "验证错误")

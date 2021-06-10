@@ -168,6 +168,28 @@ data class Person(
             }
         }
 
+        fun synced(context: Context, person: Person): Int {
+            if (person.id == null) {
+                return -1
+            }
+
+            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+                helper.writableDatabase.use { db: SQLiteDatabase ->
+                    person.status = TelephoneDirectory.SYNCED
+                    person.time = System.currentTimeMillis()
+                    val contentValues = ContentValues()
+                    contentValues.put(TPerson.COLUMN_NAME_STATUS, person.status)
+                    contentValues.put(TPerson.COLUMN_NAME_TIME, person.time)
+                    return db.update(
+                        TPerson.TABLE_NAME,
+                        contentValues,
+                        "${BaseColumns._ID} = ?",
+                        arrayOf(person.id)
+                    )
+                }
+            }
+        }
+
         fun all(context: Context): List<Person> {
             val persons = arrayListOf<Person>()
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->

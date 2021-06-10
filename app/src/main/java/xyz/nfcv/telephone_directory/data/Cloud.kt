@@ -5,7 +5,7 @@ import xyz.nfcv.telephone_directory.model.Person
 
 class Cloud {
     enum class Operation {
-        ADD, DELETE, UPDATE
+        ADD, DELETE, UPDATE, SYNCED
     }
 
     data class Record(val person: Person, val operation: Operation)
@@ -23,9 +23,11 @@ class Cloud {
                     Operation.UPDATE -> {
                         Person.updateCloud(context, record.person)
                     }
+                    Operation.SYNCED -> {
+                        Person.synced(context, record.person)
+                    }
                 }
             }
-
         }
     }
 }

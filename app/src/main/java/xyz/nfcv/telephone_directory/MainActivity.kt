@@ -67,10 +67,17 @@ class MainActivity : AppCompatActivity() {
             return@setOnTouchListener false
         }
 
+        binding.cloudSync.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_PRESS)
+                MotionEvent.ACTION_UP -> v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_RELEASE)
+            }
+            return@setOnTouchListener false
+        }
+
 
         binding.addContactor.setOnClickListener {
             startActivity(Intent(this, AddContactorActivity::class.java))
-
             binding.fabContactorMenu.collapse()
         }
 
@@ -80,6 +87,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.readNfcTag.setOnClickListener {
             startActivity(Intent(this, NfcReadActivity::class.java))
+            binding.fabContactorMenu.collapse()
+        }
+
+        binding.cloudSync.setOnClickListener {
+            startActivity(Intent(this, AccountActivity::class.java))
             binding.fabContactorMenu.collapse()
         }
 

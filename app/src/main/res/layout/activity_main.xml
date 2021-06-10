@@ -66,6 +66,15 @@
         app:fab_addButtonColorNormal="#4CAF50">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cloud_sync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="#7986CB"
+            app:fab_icon="@drawable/ic_cloud"
+            app:fab_title="cloud sync"
+            app:rippleColor="#FF3030" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/scan_qr_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
