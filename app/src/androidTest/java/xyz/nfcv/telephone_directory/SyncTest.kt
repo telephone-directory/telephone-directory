@@ -28,4 +28,22 @@ class SyncTest {
                 Log.d(javaClass.name, "登录结果: ${Account.get(appContext)}")
             })
     }
+
+    @Test
+    fun register() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val cloud = CloudApi.retrofit.create(CloudApi::class.java)
+        val username = "wcf"
+        val password = "123456"
+        cloud.register(username, password)
+            .enqueue(CloudApi.defaultCallback { code: Int, any: Any? ->
+                if (code != 200) {
+                    Log.d(javaClass.name, "注册失败")
+                } else {
+                    Log.d(javaClass.name, "注册成功")
+                }
+
+                Log.d(javaClass.name, "注册结果: ${Account.get(appContext)}")
+            })
+    }
 }

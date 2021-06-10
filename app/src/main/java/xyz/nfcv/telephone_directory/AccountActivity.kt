@@ -1,29 +1,37 @@
 package xyz.nfcv.telephone_directory
 
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.IBinder
-import android.view.ViewGroup
-import androidx.core.view.*
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
+import xyz.nfcv.telephone_directory.data.Account
+import xyz.nfcv.telephone_directory.data.CloudApi
 import xyz.nfcv.telephone_directory.databinding.ActivityAccountBinding
+import xyz.nfcv.telephone_directory.model.User
 
 class AccountActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAccountBinding
-    private var binder: CloudService.CloudBinder? = null
+    private val cloud: CloudApi by lazy { CloudApi.retrofit.create(CloudApi::class.java) }
 
-    private val connection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            binder = service as? CloudService.CloudBinder
+    private val user: User?
+        get() {
+            return Account.get(this)
         }
 
-        override fun onServiceDisconnected(name: ComponentName?) {
-            binder = null
-        }
-    }
+//    var binder: CloudService.CloudBinder? = null
+//    private val connection: ServiceConnection = object : ServiceConnection {
+//        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+//            binder = service as? CloudService.CloudBinder
+//        }
+//
+//        override fun onServiceDisconnected(name: ComponentName?) {
+//            binder = null
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +45,38 @@ class AccountActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        Intent(this, CloudService::class.java).apply {
-            bindService(this, connection, Context.BIND_AUTO_CREATE)
-        }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        unbindService(connection)
+        user.let {
+            if (it == null) {
+                binding.accountId.text = getText(R.string.no_login)
+                binding.accountLogout.text = getText(R.string.login)
+            } else {
+                binding.accountId.text = it.userId
+                binding.accountLogout.text = getText(R.string.logout)
+            }
+        }
+
+        binding.accountLogout.setOnClickListener {
+            val u = user
+            if (u == null) {
+                LoginDialog(cloud) { user ->
+                    Account.take(this, user)
+                    binding.accountLogout.text = getText(R.string.logout)
+                    binding.accountId.text = user.userId
+                }.show(supportFragmentManager, LoginDialog::javaClass.name)
+            } else {
+                Account.remove(this)
+                finish()
+            }
+        }
+
+        binding.accountSync.setOnClickListener {
+            val u = user
+            if (u == null) {
+                Toast.makeText(this, getText(R.string.no_login), Toast.LENGTH_SHORT).show()
+            } else {
+
+            }
+        }
     }
 }

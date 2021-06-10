@@ -23,4 +23,15 @@
     <string name="email_example">wcf@zjut.edu.cn</string>
     <string name="address_example">杭州市留下街道留和路288号浙江工业大学屏峰校区</string>
     <string name="add_to_contactor_list">Add to contactor list</string>
+    <string name="sync">Sync</string>
+    <string name="logout">Logout</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="create_account">Register</string>
+    <string name="login_account">Login</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="login_with_account">Login With Cloud Sync</string>
+    <string name="register">Register</string>
+    <string name="no_login">No Login</string>
 </resources>

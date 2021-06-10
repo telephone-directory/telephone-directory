@@ -14,7 +14,8 @@ import xyz.nfcv.telephone_directory.model.User
 
 interface CloudApi {
     companion object {
-        private const val SERVER = "https://phone.huhaorui.com"
+        //private const val SERVER = "https://phone.huhaorui.com"
+        private const val SERVER = "http://192.168.123.222:8802"
         var retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(SERVER)
             .addConverterFactory(GsonConverterFactory.create())
@@ -47,7 +48,7 @@ interface CloudApi {
     fun register(
         @Field("username") username: String,
         @Field("password") password: String
-    ): Call<Result<Any>>
+    ): Call<Result<String>>
 
     @POST("/user/validate")
     @FormUrlEncoded
