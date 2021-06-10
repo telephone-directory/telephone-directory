@@ -5,10 +5,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 import xyz.nfcv.telephone_directory.model.Person
 import xyz.nfcv.telephone_directory.model.User
 
@@ -58,10 +55,9 @@ interface CloudApi {
     ): Call<Result<Any>>
 
     @POST("/person/sync")
-    @FormUrlEncoded
     fun sync(
         @Header("UserId") userId: String,
         @Header("Token") token: String,
-        @Field("local") local: List<Person>
+        @Body local: List<Person>
     ): Call<Result<List<Cloud.Record>>>
 }

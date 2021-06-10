@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.JobIntentService
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -75,7 +76,7 @@ class AccountActivity : AppCompatActivity() {
             if (u == null) {
                 Toast.makeText(this, getText(R.string.no_login), Toast.LENGTH_SHORT).show()
             } else {
-
+                JobIntentService.enqueueWork(this, CloudService::class.java, 1, Intent())
             }
         }
     }
