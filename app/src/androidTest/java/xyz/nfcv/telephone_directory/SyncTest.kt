@@ -5,6 +5,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Test
 import xyz.nfcv.telephone_directory.data.Account
 import xyz.nfcv.telephone_directory.data.CloudApi
+import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper
+import xyz.nfcv.telephone_directory.model.Person
 import xyz.nfcv.telephone_directory.model.User
 
 class SyncTest {
@@ -45,5 +47,13 @@ class SyncTest {
 
                 Log.d(javaClass.name, "注册结果: ${Account.get(appContext)}")
             })
+    }
+
+    @Test
+    fun updateData() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        for (person in Person.all(appContext)) {
+            TelephoneDirectoryDbHelper(appContext).writableDatabase.execSQL("update telephone_directory set status = 6 where status > 0")
+        }
     }
 }

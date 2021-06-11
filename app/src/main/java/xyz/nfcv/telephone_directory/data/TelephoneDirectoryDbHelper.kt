@@ -10,11 +10,12 @@ const val DATABASE_NAME: String = "TelephoneDirectory.db"
 const val DATABASE_VERSION = 1
 
 class TelephoneDirectoryDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+
     object TelephoneDirectory {
         const val LOCAL_DELETE = -1
-        const val SYNCED = 9
-        const val LOCAL_MODIFY = 1
-        const val LOCAL_INSERT = 0
+        const val SYNCED = 1 shl 3
+        const val LOCAL_MODIFY = 1 shl 2
+        const val LOCAL_INSERT = 1 shl 1
 
         object TPerson : BaseColumns {
             const val TABLE_NAME = "telephone_directory"

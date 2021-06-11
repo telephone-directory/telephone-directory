@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.JobIntentService
 import xyz.nfcv.telephone_directory.data.Account
 import xyz.nfcv.telephone_directory.data.Cloud
@@ -12,6 +13,7 @@ import xyz.nfcv.telephone_directory.data.CloudApi
 import xyz.nfcv.telephone_directory.data.CloudApi.Companion.defaultCallback
 import xyz.nfcv.telephone_directory.model.Person
 import xyz.nfcv.telephone_directory.model.User
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,40 +22,44 @@ class CloudService : JobIntentService() {
     private val cloud: CloudApi by lazy { CloudApi.retrofit.create(CloudApi::class.java) }
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) { true } }
 
-//    inner class CloudBinder : Binder() {
-//        val service: CloudService = this@CloudService
-//    }
-
-//    override fun onBind(intent: Intent): IBinder {
-//        Log.d(javaClass.name, "onBind")
-//        return CloudBinder()
-//    }
-
-//    override fun onUnbind(intent: Intent?): Boolean {
-//        Log.d(javaClass.name, "onUnbind")
-//        return super.onUnbind(intent)
-//    }
-
     override fun onHandleWork(intent: Intent) {
         Log.d(javaClass.name, "JobIntentService Start @${SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE).format(Date())} Thread: ${Thread.currentThread().id}")
         val user = Account.get(this)
         if (user != null) {
-            val locals = Person.allWithStatus(this)
-            Log.d(javaClass.name, "LOCAL")
-            locals.forEach {
-                Log.d(javaClass.name, it.toString())
-            }
-            val call = cloud.sync(user.userId, user.token, locals)
-            val response = call.execute()
-            val data = response.body()
-            if (response.isSuccessful && response.code() == 200 && data != null && data.code == 200) {
-                Log.d(javaClass.name, "REMOTE")
-                data.data?.forEach {
+            try {
+                val locals = Person.allWithStatus(this)
+                Log.d(javaClass.name, "LOCAL")
+                locals.forEach {
                     Log.d(javaClass.name, it.toString())
                 }
-            } else {
-                Log.d(javaClass.name, "同步错误")
+                val call = cloud.sync(user.userId, user.token, locals)
+                val response = call.execute()
+                val data = response.body()
+                if (response.isSuccessful && response.code() == 200) {
+                    if (data != null && data.code == 200) {
+                        Log.d(javaClass.name, "REMOTE")
+                        data.data?.forEach {
+                            Log.d(javaClass.name, it.toString())
+                        }
+                        data.data?.let { records ->
+                            Cloud.invalidate(this, records)
+                            handler.post {
+                                Toast.makeText(this@CloudService, "同步成功", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Log.d(javaClass.name, "登录过期")
+                        handler.post {
+                            Toast.makeText(this@CloudService, "登录过期", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Log.d(javaClass.name, "同步错误")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
+
         } else {
             Log.d(javaClass.name, "未登录")
         }

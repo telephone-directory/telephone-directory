@@ -56,10 +56,12 @@ data class Person(
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     for (person in persons) {
+                        if (person.id == null) {
+                            continue
+                        }
                         person.status = TelephoneDirectory.SYNCED
-                        person.time = System.currentTimeMillis()
                         val contentValues = ContentValues()
-                        contentValues.put(BaseColumns._ID, UUID.randomUUID().toString())
+                        contentValues.put(BaseColumns._ID, person.id)
                         contentValues.put(TPerson.COLUMN_NAME_NAME, person.name)
                         contentValues.put(TPerson.COLUMN_NAME_TELEPHONE, person.telephone)
                         contentValues.put(TPerson.COLUMN_NAME_EMAIL, person.email)
@@ -119,7 +121,8 @@ data class Person(
 
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
-                    person.status = TelephoneDirectory.LOCAL_MODIFY
+                    person.status =
+                        TelephoneDirectory.LOCAL_MODIFY or (person.status and TelephoneDirectory.LOCAL_INSERT)
                     person.time = System.currentTimeMillis()
                     val contentValues = ContentValues()
                     contentValues.put(TPerson.COLUMN_NAME_NAME, person.name)
@@ -148,7 +151,7 @@ data class Person(
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     person.status = TelephoneDirectory.SYNCED
-                    person.time = System.currentTimeMillis()
+//                    person.time = System.currentTimeMillis()
                     val contentValues = ContentValues()
                     contentValues.put(TPerson.COLUMN_NAME_NAME, person.name)
                     contentValues.put(TPerson.COLUMN_NAME_TELEPHONE, person.telephone)
@@ -176,7 +179,7 @@ data class Person(
             TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     person.status = TelephoneDirectory.SYNCED
-                    person.time = System.currentTimeMillis()
+//                    person.time = System.currentTimeMillis()
                     val contentValues = ContentValues()
                     contentValues.put(TPerson.COLUMN_NAME_STATUS, person.status)
                     contentValues.put(TPerson.COLUMN_NAME_TIME, person.time)
@@ -282,6 +285,14 @@ data class Person(
             }
 
             return persons
+        }
+
+        fun clear(context: Context): Int {
+            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+                helper.writableDatabase.use { db: SQLiteDatabase ->
+                    return db.delete(TPerson.TABLE_NAME, null, null)
+                }
+            }
         }
 
         fun select(context: Context, value: String): Person? {
@@ -390,7 +401,7 @@ data class Person(
                             TPerson.COLUMN_NAME_HOME_ADDRESS,
                             TPerson.COLUMN_NAME_LIKE,
 
-                        ),
+                            ),
                         "${TPerson.COLUMN_NAME_STATUS} >= 0 and ${TPerson.COLUMN_NAME_WORK_ADDRESS} like ? or ${TPerson.COLUMN_NAME_HOME_ADDRESS} like ?",
                         arrayOf("%${value}%", "%${value}%"),
                         null,

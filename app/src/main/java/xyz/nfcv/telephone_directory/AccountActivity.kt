@@ -1,5 +1,6 @@
 package xyz.nfcv.telephone_directory
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -12,6 +13,7 @@ import androidx.core.view.updatePadding
 import xyz.nfcv.telephone_directory.data.Account
 import xyz.nfcv.telephone_directory.data.CloudApi
 import xyz.nfcv.telephone_directory.databinding.ActivityAccountBinding
+import xyz.nfcv.telephone_directory.model.Person
 import xyz.nfcv.telephone_directory.model.User
 
 class AccountActivity : AppCompatActivity() {
@@ -23,17 +25,7 @@ class AccountActivity : AppCompatActivity() {
             return Account.get(this)
         }
 
-//    var binder: CloudService.CloudBinder? = null
-//    private val connection: ServiceConnection = object : ServiceConnection {
-//        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-//            binder = service as? CloudService.CloudBinder
-//        }
-//
-//        override fun onServiceDisconnected(name: ComponentName?) {
-//            binder = null
-//        }
-//    }
-
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -52,7 +44,7 @@ class AccountActivity : AppCompatActivity() {
                 binding.accountId.text = getText(R.string.no_login)
                 binding.accountLogout.text = getText(R.string.login)
             } else {
-                binding.accountId.text = it.userId
+                binding.accountId.text = "UserId: " + it.userId
                 binding.accountLogout.text = getText(R.string.logout)
             }
         }
@@ -63,11 +55,18 @@ class AccountActivity : AppCompatActivity() {
                 LoginDialog(cloud) { user ->
                     Account.take(this, user)
                     binding.accountLogout.text = getText(R.string.logout)
-                    binding.accountId.text = user.userId
+                    binding.accountId.text = "UserId: " + user.userId
                 }.show(supportFragmentManager, LoginDialog::javaClass.name)
             } else {
                 Account.remove(this)
-                finish()
+                Person.clear(this)
+                binding.accountLogout.text = getText(R.string.login)
+                binding.accountId.text = getText(R.string.no_login)
+                LoginDialog(cloud) { user ->
+                    Account.take(this, user)
+                    binding.accountLogout.text = getText(R.string.logout)
+                    binding.accountId.text = "UserId: " + user.userId
+                }.show(supportFragmentManager, LoginDialog::javaClass.name)
             }
         }
 
