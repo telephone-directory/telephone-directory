@@ -6,10 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory.TPerson
 
-const val DATABASE_NAME: String = "TelephoneDirectory.db"
-const val DATABASE_VERSION = 1
-
-class TelephoneDirectoryDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class TelephoneDirectoryDbHelper private constructor(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     object TelephoneDirectory {
         const val LOCAL_DELETE = -1
@@ -27,6 +24,21 @@ class TelephoneDirectoryDbHelper(context: Context) : SQLiteOpenHelper(context, D
             const val COLUMN_NAME_LIKE = "star"
             const val COLUMN_NAME_STATUS = "status"
             const val COLUMN_NAME_TIME = "time"
+        }
+    }
+
+    companion object {
+        private const val DATABASE_NAME = "TelephoneDirectory.db"
+        private const val DATABASE_VERSION = 1
+
+        var helper: TelephoneDirectoryDbHelper? = null
+
+        @Synchronized
+        fun getHelper(context: Context): TelephoneDirectoryDbHelper {
+            val helper: TelephoneDirectoryDbHelper =
+                this.helper ?: TelephoneDirectoryDbHelper(context)
+            this.helper = helper
+            return helper
         }
     }
 

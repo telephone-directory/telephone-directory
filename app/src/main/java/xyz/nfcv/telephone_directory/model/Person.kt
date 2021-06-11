@@ -31,7 +31,7 @@ data class Person(
 
     companion object {
         fun insert(context: Context, vararg persons: Person) {
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     for (person in persons) {
                         person.status = TelephoneDirectory.LOCAL_INSERT
@@ -53,7 +53,7 @@ data class Person(
         }
 
         fun insertCloud(context: Context, vararg persons: Person) {
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     for (person in persons) {
                         if (person.id == null) {
@@ -81,7 +81,7 @@ data class Person(
                 return -1
             }
 
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     person.status = TelephoneDirectory.LOCAL_DELETE
                     person.time = System.currentTimeMillis()
@@ -103,7 +103,7 @@ data class Person(
                 return -1
             }
 
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     return db.delete(
                         TPerson.TABLE_NAME,
@@ -119,7 +119,7 @@ data class Person(
                 return -1
             }
 
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     person.status =
                         TelephoneDirectory.LOCAL_MODIFY or (person.status and TelephoneDirectory.LOCAL_INSERT)
@@ -148,7 +148,7 @@ data class Person(
                 return -1
             }
 
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     person.status = TelephoneDirectory.SYNCED
 //                    person.time = System.currentTimeMillis()
@@ -176,7 +176,7 @@ data class Person(
                 return -1
             }
 
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     person.status = TelephoneDirectory.SYNCED
 //                    person.time = System.currentTimeMillis()
@@ -195,7 +195,7 @@ data class Person(
 
         fun all(context: Context): List<Person> {
             val persons = arrayListOf<Person>()
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.readableDatabase.use { db: SQLiteDatabase ->
                     val cursor = db.query(
                         TPerson.TABLE_NAME,
@@ -242,7 +242,7 @@ data class Person(
 
         fun allWithStatus(context: Context): List<Person> {
             val persons = arrayListOf<Person>()
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.readableDatabase.use { db: SQLiteDatabase ->
                     val cursor = db.query(
                         TPerson.TABLE_NAME,
@@ -288,7 +288,7 @@ data class Person(
         }
 
         fun clear(context: Context): Int {
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.writableDatabase.use { db: SQLiteDatabase ->
                     return db.delete(TPerson.TABLE_NAME, null, null)
                 }
@@ -296,7 +296,7 @@ data class Person(
         }
 
         fun select(context: Context, value: String): Person? {
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.readableDatabase.use { db: SQLiteDatabase ->
                     val cursor = db.query(
                         TPerson.TABLE_NAME,
@@ -341,7 +341,7 @@ data class Person(
 
         fun likeName(context: Context, value: String): ArrayList<Person> {
             val persons = arrayListOf<Person>()
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.readableDatabase.use { db: SQLiteDatabase ->
                     val cursor = db.query(
                         TPerson.TABLE_NAME,
@@ -388,7 +388,7 @@ data class Person(
 
         fun likeAddress(context: Context, value: String): ArrayList<Person> {
             val persons = arrayListOf<Person>()
-            TelephoneDirectoryDbHelper(context).use { helper: TelephoneDirectoryDbHelper ->
+            TelephoneDirectoryDbHelper.getHelper(context).let { helper: TelephoneDirectoryDbHelper ->
                 helper.readableDatabase.use { db: SQLiteDatabase ->
                     val cursor = db.query(
                         TPerson.TABLE_NAME,
