@@ -11,8 +11,8 @@ import xyz.nfcv.telephone_directory.model.User
 
 interface CloudApi {
     companion object {
-//        private const val SERVER = "https://phone.huhaorui.com"
-        private const val SERVER = "http://nfcv.xyz:8802"
+        private const val SERVER = "https://phone.huhaorui.com"
+//        private const val SERVER = "http://nfcv.xyz:8802"
         var retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(SERVER)
             .addConverterFactory(GsonConverterFactory.create())
