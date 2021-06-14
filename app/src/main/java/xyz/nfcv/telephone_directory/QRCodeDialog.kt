@@ -17,6 +17,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import xyz.nfcv.telephone_directory.databinding.DialogQrcodeBinding
 import xyz.nfcv.telephone_directory.model.Person
+import xyz.nfcv.util.urlencode
 import java.io.File
 
 
@@ -38,8 +39,8 @@ class QRCodeDialog(val person: Person) : DialogFragment() {
         val scheme = getString(R.string.scheme)
         val host = getString(R.string.host)
         val path = getString(R.string.path)
-        val uri = Uri.parse("$scheme://$host$path?data=${Gson().toJson(person)}")
-        val size = 1024
+        val uri = Uri.parse("$scheme://$host$path?data=${Gson().toJson(person).urlencode}")
+        val size = 512
         val matrix = QRCodeWriter().encode(uri.toString(), BarcodeFormat.QR_CODE, size, size)
         val pixels = IntArray(size * size)
         for (y in 0 until size) {

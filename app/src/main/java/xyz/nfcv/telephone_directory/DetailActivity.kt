@@ -2,11 +2,6 @@ package xyz.nfcv.telephone_directory
 
 import android.content.Intent
 import android.net.Uri
-import android.nfc.NfcAdapter
-import android.nfc.Tag
-import android.nfc.tech.MifareClassic
-import android.nfc.tech.NdefFormatable
-import android.nfc.tech.NfcA
 import android.os.Bundle
 import android.provider.BaseColumns
 import android.util.Log
@@ -18,13 +13,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import com.google.gson.Gson
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.ofBitmap
-import xyz.nfcv.telephone_directory.data.Account
 import xyz.nfcv.telephone_directory.databinding.ActivityDetailBinding
 import xyz.nfcv.telephone_directory.model.Person
-import xyz.nfcv.util.bytes
-import xyz.nfcv.util.urlencode
 import java.net.URLEncoder
 
 class DetailActivity : AppCompatActivity() {

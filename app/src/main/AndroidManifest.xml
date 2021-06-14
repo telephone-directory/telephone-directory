@@ -20,6 +20,21 @@
         android:theme="@style/Theme.Telephonedirectory.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
+        <activity
+            android:name=".UriBrowserActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/host"
+                    android:path="@string/path"
+                    android:scheme="@string/scheme" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="xyz.nfcv.telephone_directory.fileprovider"
