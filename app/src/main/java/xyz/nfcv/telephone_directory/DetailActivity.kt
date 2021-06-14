@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.google.gson.Gson
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.ofBitmap
+import xyz.nfcv.telephone_directory.data.Account
 import xyz.nfcv.telephone_directory.databinding.ActivityDetailBinding
 import xyz.nfcv.telephone_directory.model.Person
 import xyz.nfcv.util.bytes
@@ -143,6 +144,10 @@ class DetailActivity : AppCompatActivity() {
             }
         } else {
             binding.detailHomeAddressItem.visibility = View.GONE
+        }
+
+        binding.detailQrcode.setOnClickListener {
+            QRCodeDialog(person).show(supportFragmentManager, QRCodeDialog::javaClass.name)
         }
 
         binding.detailShare.setOnClickListener {

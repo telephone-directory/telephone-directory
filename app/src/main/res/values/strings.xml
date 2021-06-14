@@ -38,5 +38,6 @@
     <string name="login_with_account">使用云同步账户登录</string>
     <string name="login_account">登录账户</string>
     <string name="no_login">未登录</string>
+    <string name="qrcode">二维码</string>
 
 </resources>

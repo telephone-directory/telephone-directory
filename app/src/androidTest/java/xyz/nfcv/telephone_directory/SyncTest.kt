@@ -38,7 +38,7 @@ class SyncTest {
         val username = "wcf"
         val password = "123456"
         cloud.register(username, password)
-            .enqueue(CloudApi.defaultCallback { code: Int, any: Any? ->
+            .enqueue(CloudApi.defaultCallback { code: Int, _: Any? ->
                 if (code != 200) {
                     Log.d(javaClass.name, "注册失败")
                 } else {
@@ -53,7 +53,7 @@ class SyncTest {
     fun updateData() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         for (person in Person.all(appContext)) {
-            TelephoneDirectoryDbHelper(appContext).writableDatabase.execSQL("update telephone_directory set status = 6 where status > 0")
+            TelephoneDirectoryDbHelper.getHelper(appContext).writableDatabase.execSQL("update telephone_directory set status = 6 where status > 0")
         }
     }
 }
