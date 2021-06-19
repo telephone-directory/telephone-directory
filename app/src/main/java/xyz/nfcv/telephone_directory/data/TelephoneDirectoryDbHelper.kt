@@ -31,7 +31,7 @@ class TelephoneDirectoryDbHelper private constructor(context: Context) : SQLiteO
         private const val DATABASE_NAME = "TelephoneDirectory.db"
         private const val DATABASE_VERSION = 1
 
-        var helper: TelephoneDirectoryDbHelper? = null
+        private var helper: TelephoneDirectoryDbHelper? = null
 
         @Synchronized
         fun getHelper(context: Context): TelephoneDirectoryDbHelper {

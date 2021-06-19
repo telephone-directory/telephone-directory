@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="请贴近联系人卡片"
+        android:text="@string/please_attach_nfc_tag"
         android:textSize="28sp" />
 
     <ScrollView

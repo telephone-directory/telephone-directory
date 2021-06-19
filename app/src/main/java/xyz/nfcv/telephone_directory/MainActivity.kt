@@ -51,14 +51,6 @@ class MainActivity : AppCompatActivity() {
             return@setOnTouchListener false
         }
 
-        binding.scanQrCode.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_PRESS)
-                MotionEvent.ACTION_UP -> v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_RELEASE)
-            }
-            return@setOnTouchListener false
-        }
-
         binding.readNfcTag.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_PRESS)
@@ -78,10 +70,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.addContactor.setOnClickListener {
             startActivity(Intent(this, AddContactorActivity::class.java))
-            binding.fabContactorMenu.collapse()
-        }
-
-        binding.scanQrCode.setOnClickListener {
             binding.fabContactorMenu.collapse()
         }
 

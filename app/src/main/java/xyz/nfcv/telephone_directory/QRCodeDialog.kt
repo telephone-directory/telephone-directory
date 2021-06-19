@@ -9,7 +9,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import com.google.gson.Gson
@@ -75,10 +74,5 @@ class QRCodeDialog(val person: Person) : DialogFragment() {
             it.setLayout(dm.widthPixels, it.attributes.height)
             it.attributes = it.attributes.apply { gravity = Gravity.CENTER }
         }
-    }
-
-    companion object {
-        private val EditText?.string: String
-            get() = this?.text.toString()
     }
 }

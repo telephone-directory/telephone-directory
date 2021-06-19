@@ -11,7 +11,7 @@ class RoundImageView : AppCompatImageView {
 
     private lateinit var paint: Paint
     private lateinit var paint2: Paint
-    var radius = 5
+    private var radius = 5
         set(value) {
             field = value
             invalidate()

@@ -39,5 +39,6 @@
     <string name="login_account">登录账户</string>
     <string name="no_login">未登录</string>
     <string name="qrcode">二维码</string>
+    <string name="please_attach_nfc_tag">请贴近联系人卡片</string>
 
 </resources>

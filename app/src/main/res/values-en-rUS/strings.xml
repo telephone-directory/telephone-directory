@@ -35,4 +35,5 @@
     <string name="register">Register</string>
     <string name="no_login">No Login</string>
     <string name="qrcode">QR Code</string>
+    <string name="please_attach_nfc_tag">Please attach the NFC tag</string>
 </resources>
