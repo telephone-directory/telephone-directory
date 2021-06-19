@@ -35,23 +35,26 @@
         <entry key="app/src/main/res/drawable/ic_share_48px.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_account.xml" value="0.10877192982456141" />
         <entry key="app/src/main/res/layout/activity_add_contactor.xml" value="0.10394736842105264" />
-        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.18412790287830094" />
         <entry key="app/src/main/res/layout/activity_edit_contactor.xml" value="0.12183908045977011" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15921052631578947" />
         <entry key="app/src/main/res/layout/activity_nfc_read.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_nfc_tag.xml" value="0.21385281385281385" />
         <entry key="app/src/main/res/layout/activity_nfc_write.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.11140350877192982" />
+        <entry key="app/src/main/res/layout/activity_uri_browser.xml" value="0.10877192982456141" />
         <entry key="app/src/main/res/layout/contact_child_people.xml" value="0.25333333333333335" />
         <entry key="app/src/main/res/layout/contact_group_header.xml" value="0.21385281385281385" />
         <entry key="app/src/main/res/layout/contact_header.xml" value="0.25729166666666664" />
         <entry key="app/src/main/res/layout/detail_info_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/dialog_login.xml" value="0.19454803466796874" />
+        <entry key="app/src/main/res/layout/dialog_qrcode.xml" value="0.11099395751953126" />
         <entry key="app/src/main/res/layout/person_card.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/sample_sidebar.xml" value="0.1985077714644152" />
         <entry key="app/src/main/res/layout/sidebar_item.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="app/src/main/res/xml/filepaths.xml" value="0.1" />
         <entry key="app/src/main/res/xml/nfc_tech_filter.xml" value="0.1" />
       </map>
     </option>
