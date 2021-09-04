@@ -1,4 +1,4 @@
-package xyz.nfcv.widget
+package xyz.nfcv.widget.sidebar
 
 enum class Header(val value: String, val index: Int) {
     LIKE("收藏", 0),

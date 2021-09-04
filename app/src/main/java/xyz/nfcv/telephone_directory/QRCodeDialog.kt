@@ -16,7 +16,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import xyz.nfcv.telephone_directory.databinding.DialogQrcodeBinding
 import xyz.nfcv.telephone_directory.model.Person
-import xyz.nfcv.util.urlencode
+import xyz.nfcv.telephone_directory.util.urlencode
 import java.io.File
 
 

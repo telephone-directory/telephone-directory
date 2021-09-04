@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <xyz.nfcv.widget.RoundImageView
+                <xyz.nfcv.widget.round.imageview.RoundImageView
                     android:id="@+id/detail_people_avatar"
                     android:layout_width="@dimen/avatar_size_large"
                     android:layout_height="@dimen/avatar_size_large"
@@ -85,7 +85,7 @@
                     android:textSize="12sp"
                     android:visibility="gone" />
 
-                <xyz.nfcv.widget.RoundImageView
+                <xyz.nfcv.widget.round.imageview.RoundImageView
                     android:id="@+id/detail_phone_call"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
@@ -96,7 +96,7 @@
                     android:src="@drawable/ic_call"
                     app:radius="18dp" />
 
-                <xyz.nfcv.widget.RoundImageView
+                <xyz.nfcv.widget.round.imageview.RoundImageView
                     android:id="@+id/detail_phone_message"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
@@ -136,7 +136,7 @@
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
-                <xyz.nfcv.widget.RoundImageView
+                <xyz.nfcv.widget.round.imageview.RoundImageView
                     android:id="@+id/detail_email_send"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
@@ -179,7 +179,7 @@
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
-                <xyz.nfcv.widget.RoundImageView
+                <xyz.nfcv.widget.round.imageview.RoundImageView
                     android:id="@+id/detail_home_address_navigate"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
@@ -222,7 +222,7 @@
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
-                <xyz.nfcv.widget.RoundImageView
+                <xyz.nfcv.widget.round.imageview.RoundImageView
                     android:id="@+id/detail_work_address_navigate"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
@@ -251,7 +251,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
-                <xyz.nfcv.widget.RoundImageView
+                <xyz.nfcv.widget.round.imageview.RoundImageView
                     android:id="@+id/detail_qrcode"
                     android:layout_width="36dp"
                     android:layout_height="36dp"

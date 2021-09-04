@@ -3,9 +3,9 @@ package xyz.nfcv.telephone_directory
 import android.util.Log
 import org.junit.Test
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
-import xyz.nfcv.widget.Header
 import xyz.nfcv.telephone_directory.model.PeopleGroupData
 import xyz.nfcv.telephone_directory.model.Person
+import xyz.nfcv.widget.sidebar.Header
 import java.util.*
 
 class PersonGroupTest {

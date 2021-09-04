@@ -11,13 +11,11 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.*
+import xyz.nfcv.widget.sidebar.Header
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter
 import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.PeopleGroup
 import xyz.nfcv.telephone_directory.databinding.ActivityMainBinding
 import xyz.nfcv.telephone_directory.model.Person
-import xyz.nfcv.widget.Header
-import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -84,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.contactSidebar.addListener { _, header ->
-            contactorListAdapter.near(header)?.let {
+            contactorListAdapter.near(header)?.let { it ->
                 contactorListAdapter.scroll(it)
             }
         }

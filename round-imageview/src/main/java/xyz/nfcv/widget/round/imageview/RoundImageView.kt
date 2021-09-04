@@ -1,11 +1,10 @@
-package xyz.nfcv.widget
+package xyz.nfcv.widget.round.imageview
 
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
-import xyz.nfcv.telephone_directory.R
 
 class RoundImageView : AppCompatImageView {
 

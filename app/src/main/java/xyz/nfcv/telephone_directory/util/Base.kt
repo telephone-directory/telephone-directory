@@ -1,4 +1,4 @@
-package xyz.nfcv.util
+package xyz.nfcv.telephone_directory.util
 
 import java.io.File
 import java.net.URLDecoder

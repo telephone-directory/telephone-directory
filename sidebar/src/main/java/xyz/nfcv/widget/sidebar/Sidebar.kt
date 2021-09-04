@@ -1,4 +1,4 @@
-package xyz.nfcv.widget
+package xyz.nfcv.widget.sidebar
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,7 +11,6 @@ import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
-import xyz.nfcv.telephone_directory.R
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.abs
 
@@ -55,7 +54,7 @@ class Sidebar : View {
             textAlign = Paint.Align.CENTER
         }
 
-        background = ResourcesCompat.getDrawable(resources, R.drawable.border_capsule_20dp, null)
+        background = ResourcesCompat.getDrawable(resources, R.drawable.sidebar_border_capsule_20dp, null)
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.Sidebar, defStyle, 0)
         selectedColor = a.getColor(R.styleable.Sidebar_selectedColor, selectedColor)

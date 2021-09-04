@@ -12,7 +12,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType
 import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper
 import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory
 import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory.TPerson
-import xyz.nfcv.widget.Header
+import xyz.nfcv.widget.sidebar.Header
 import java.util.*
 import java.util.regex.Pattern
 

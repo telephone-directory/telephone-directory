@@ -42,7 +42,7 @@
         android:childIndicator="@null"
         android:groupIndicator="@null" />
 
-    <xyz.nfcv.widget.Sidebar
+    <xyz.nfcv.widget.sidebar.Sidebar
         android:id="@+id/contact_sidebar"
         android:layout_width="20dp"
         android:layout_height="wrap_content"

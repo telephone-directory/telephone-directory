@@ -14,8 +14,8 @@ import android.widget.TextView
 import xyz.nfcv.telephone_directory.databinding.ContactChildPeopleBinding
 import xyz.nfcv.telephone_directory.databinding.ContactGroupHeaderBinding
 import xyz.nfcv.telephone_directory.model.Person
-import xyz.nfcv.widget.Header
-import xyz.nfcv.widget.RoundImageView
+import xyz.nfcv.widget.round.imageview.RoundImageView
+import xyz.nfcv.widget.sidebar.Header
 import java.util.*
 import kotlin.math.abs
 
@@ -57,7 +57,7 @@ class ContactorListAdapter(
         }
 
         class ChildViewHolder {
-            lateinit var avatar: RoundImageView
+            lateinit var avatar: xyz.nfcv.widget.round.imageview.RoundImageView
             lateinit var name: TextView
             lateinit var info: ImageView
         }

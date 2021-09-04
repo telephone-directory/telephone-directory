@@ -1,2 +1,4 @@
 rootProject.name = "telephone-directory"
 include ':app'
+include ':sidebar'
+include ':round-imageview'

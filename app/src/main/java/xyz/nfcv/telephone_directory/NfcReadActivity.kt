@@ -3,7 +3,6 @@ package xyz.nfcv.telephone_directory
 import android.content.Intent
 import android.net.Uri
 import android.nfc.NfcAdapter
-import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,7 +17,6 @@ import xyz.nfcv.telephone_directory.adapter.ContactorListAdapter.Companion.ofBit
 import xyz.nfcv.telephone_directory.data.TelephoneDirectoryDbHelper.TelephoneDirectory.TPerson
 import xyz.nfcv.telephone_directory.databinding.ActivityNfcReadBinding
 import xyz.nfcv.telephone_directory.model.Person
-import xyz.nfcv.util.hex
 
 
 class NfcReadActivity : AppCompatActivity() {
